@@ -28,7 +28,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    登录
+                    <a href="#">登录</a>
                 </li>
             </ul>
 
