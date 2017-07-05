@@ -5,10 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>One Leaf</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
         <!-- Styles -->
         <style>
@@ -79,15 +80,14 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    API Builder
+                    <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>One Leaf
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <p>一叶</p>
+                </div>
+                <div class="links">
+                    <p>专为开发者定制的API测试和文档平台</p>
                 </div>
             </div>
         </div>

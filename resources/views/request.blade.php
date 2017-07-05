@@ -3,6 +3,7 @@
 @section('content')
     <script src="{{url('/')}}/js/request.js"></script>
     <script src="https://cdn.bootcss.com/ace/1.2.7/ace.js"></script>
+    <form action="{{url('/')}}/edit-api" method="POST">
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -15,7 +16,8 @@
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            <span id="request-method">GET</span>&nbsp<span class="caret"></span>
+                            <span id="request_method">GET</span>&nbsp<span class="caret"></span>
+                            <input type="hidden" id="request-method-input" name="api_method" value="GET">
                         </button>
                         <ul class="dropdown-menu">
                             <li><a onclick="switchMethod('GET')">GET</a></li>
@@ -24,7 +26,7 @@
                             <li><a onclick="switchMethod('DELETE')">DELETE</a></li>
                         </ul>
                     </div>
-                    <input id="request-url" type="text" class="form-control" aria-label="...">
+                    <input id="request-url" type="text" class="form-control" aria-label="..." name="api_url">
                 </div>
                 <br>
                 <!--请求配置选项卡-->
@@ -34,6 +36,9 @@
                     <li role="presentation" id="request-body-tab"><a onclick="switchRequestTab('body')">Body</a></li>
                 </ul>
                 <!--三个状态-->
+
+                <input type="hidden" name="request_headers" id="request-headers-input">
+                <input type="hidden" name="request_body" id="request-body-input">
 
                 <pre id="headers-editor" class="ace_editor" style="min-height:300px;margin-top: 5px"><textarea class="ace_text-input">{&#10    "Content-Type":"application/json"&#10}</textarea></pre>
                 {{--<pre id="params-editor" class="ace_editor" style="min-height:300px;margin-top: 5px;display:none"><textarea class="ace_text-input"></textarea></pre>--}}
@@ -87,13 +92,11 @@
                         shower.setFontSize(14);
                         shower.setReadOnly(true);
                     })
-
-
-
                 </script>
-                <button class="btn btn-primary"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> 生成文档</button>
+                <button class="btn btn-primary" type="submit" onclick="setFormValue()"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> 生成文档</button>
             </div>
         </div>
     </div>
+    </form>
 @endsection
 

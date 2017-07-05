@@ -64,6 +64,7 @@ function sendTestRequest() {
 
 function switchMethod(method) {
     document.getElementById("request-method").innerHTML = method;
+    document.getElementById("request-method-input").setAttribute("value",method);
 }
 
 function switchRequestTab(tabName) {
@@ -84,4 +85,11 @@ function switchResponseTab(tabName) {
 
     document.getElementById(tabName+'-shower').style.display = 'block';
     document.getElementById('response-'+tabName+'-tab').className = 'active';
+}
+
+function setFormValue() {
+    var requestHeaders = ace.edit("headers-editor").getValue();
+    var requestBody = ace.edit("body-editor").getValue();
+    document.getElementById("request-headers-input").setAttribute("value",requestHeaders);
+    document.getElementById("request-body-input").setAttribute("value",requestBody);
 }
