@@ -15,7 +15,7 @@
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            <span id="request-method">METHOD</span>&nbsp<span class="caret"></span>
+                            <span id="request-method">GET</span>&nbsp<span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             <li><a onclick="switchMethod('GET')">GET</a></li>
@@ -58,7 +58,7 @@
                 <button class="btn btn-primary" onclick="sendTestRequest()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> 发送请求</button>
             </div>
         </div>
-        <div class="panel panel-info">
+        <div id="response-panel" class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Response&nbsp&nbsp&nbsp<span id="status-code">(200 OK)</span></h3>
             </div>

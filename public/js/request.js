@@ -22,6 +22,16 @@ function refreshShowers(json) {
     ace.edit("headers-shower").setValue(JSON.stringify(json.response.headers,null,"\t"));
     ace.edit("body-shower").setValue(JSON.stringify(json.response.body.data,null,"\t"));
 }
+
+function refreshStatusPanel(statusCode) {
+
+    var panel = document.getElementById("response-panel");
+
+    if (statusCode === 200) {
+        panel.className = "panel panel-success";
+    } else if (statusCode )
+}
+
 function sendTestRequest() {
     var inputs =  getRequestInputs();
 
