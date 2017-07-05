@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index');
 
 Route::post('/test-api','RequestTestController@sendTestRequest');
 Route::get('/test-api','RequestTestController@getIndex');
+
+Route::get('/edit-api','ApiDocController@editApiDoc');

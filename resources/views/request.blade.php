@@ -60,7 +60,7 @@
         </div>
         <div id="response-panel" class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Response&nbsp&nbsp&nbsp<span id="status-code">(200 OK)</span></h3>
+                <h3 class="panel-title">Response&nbsp&nbsp&nbsp<span id="status-code"></span></h3>
             </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs">

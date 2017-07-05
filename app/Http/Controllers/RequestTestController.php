@@ -14,12 +14,12 @@ class RequestTestController extends Controller
 
     public function sendTestRequest(Request $request)
     {
-//        $this->validate($request,[
-//            'url' => 'required|string',
-//            'method' => 'required|string',
-//            'headers' => 'required|JSON',
-//            'body' => 'JSON'
-//        ]);
+        $this->validate($request,[
+            'url' => 'required|string',
+            'method' => 'required|string',
+            'headers' => 'required|JSON',
+            'body' => 'JSON'
+        ]);
 
         // 封装请求
 

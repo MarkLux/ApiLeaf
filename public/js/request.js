@@ -18,7 +18,7 @@ function getRequestInputs() {
 }
 
 function refreshShowers(json) {
-    document.getElementById("status-code").innerHTML = json.response.status_code;
+    refreshStatusPanel(json.response.status_code);
     ace.edit("headers-shower").setValue(JSON.stringify(json.response.headers,null,"\t"));
     ace.edit("body-shower").setValue(JSON.stringify(json.response.body.data,null,"\t"));
 }
@@ -27,9 +27,17 @@ function refreshStatusPanel(statusCode) {
 
     var panel = document.getElementById("response-panel");
 
-    if (statusCode === 200) {
+    if (statusCode === 200 || statusCode === 201) {
         panel.className = "panel panel-success";
-    } else if (statusCode )
+    } else if (statusCode === 500 || statusCode === 501 || statusCode === 502 || statusCode === 503) {
+        panel.className = "panel panel-danger";
+    } else if (statusCode === 301 || statusCode === 302) {
+        panel.className = "panel panel-info";
+    } else if (statusCode === 403 || statusCode === 404) {
+        panel.className = "panel panel-waring";
+    }
+
+    document.getElementById("status-code").innerHTML = statusCode;
 }
 
 function sendTestRequest() {
