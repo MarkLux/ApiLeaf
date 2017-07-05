@@ -17,6 +17,11 @@ function getRequestInputs() {
     return requestInputs;
 }
 
+function refreshShowers(json) {
+    document.getElementById("status-code").innerHTML = json.response.status_code;
+    ace.edit("headers-shower").setValue(JSON.stringify(json.response.headers,null,"\t"));
+    ace.edit("body-shower").setValue(JSON.stringify(json.response.body.data,null,"\t"));
+}
 function sendTestRequest() {
     var inputs =  getRequestInputs();
 
@@ -24,13 +29,19 @@ function sendTestRequest() {
 
     fetch("/test-api",{
         method:'POST',
-        body:JSON.stringify(inputs),
-        headers:{
+            body:JSON.stringify(inputs),
+            headers:{
             'content-type':'application/json'
         }
     }).then(function (res) {
-        console.log(res.body);
-    })
+        return res.json();
+    }).then(function (json) {
+        // 设置将结果返回输出到编辑器中去
+        console.log(json);
+        console.log(json.response);
+
+        refreshShowers(json);
+    });
 }
 
 function switchMethod(method) {

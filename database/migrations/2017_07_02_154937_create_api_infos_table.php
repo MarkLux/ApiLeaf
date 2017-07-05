@@ -14,7 +14,13 @@ class CreateApiInfosTable extends Migration
     public function up()
     {
         Schema::create('api_infos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id');
+            $table->string('api_name');
+            $table->string('api_collection');
+            $table->string('api_description');
+            $table->json('api_request');
+            $table->json('api_response');
             $table->timestamps();
         });
     }

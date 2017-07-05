@@ -26,14 +26,26 @@ class RequestTestController extends Controller
         $testRequest = [
             'url' => $request->input('url'),
             'method' => $request->input('method'),
-            'headers' => json_decode($request->input('headers')),
+            'headers' => json_decode($request->input('headers'),true),
             'body' => $request->input('body')
         ];
 
         $testResponse = Requests::request($testRequest['url'],$testRequest['headers'],$testRequest['body'],$testRequest['method']);
 
-//        dd(1);
+        // Requests返回的headers不能直接当数组返回，只得拆一下包
 
-        dd($testResponse);
+        $headers = [];
+        foreach ($testResponse->headers as $key => $value) {
+            $headers[$key] = $value;
+        }
+
+        return response()->json([
+            'code' => 0,
+            'response' => [
+                'status_code' => $testResponse->status_code,
+                'headers' => $headers,
+                'body' => json_decode($testResponse->body)
+            ]
+        ]);
     }
 }
