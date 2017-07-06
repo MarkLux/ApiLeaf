@@ -20,7 +20,7 @@ function getRequestInputs() {
 function refreshShowers(json) {
     refreshStatusPanel(json.response.status_code);
     ace.edit("headers-shower").setValue(JSON.stringify(json.response.headers,null,"\t"));
-    ace.edit("body-shower").setValue(JSON.stringify(json.response.body.data,null,"\t"));
+    ace.edit("body-shower").setValue(JSON.stringify(json.response.body,null,"\t"));
 }
 
 function refreshStatusPanel(statusCode) {
