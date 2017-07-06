@@ -16,7 +16,7 @@
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            <span id="request_method">GET</span>&nbsp<span class="caret"></span>
+                            <span id="request-method">GET</span>&nbsp<span class="caret"></span>
                             <input type="hidden" id="request-method-input" name="api_method" value="GET">
                         </button>
                         <ul class="dropdown-menu">
@@ -60,7 +60,7 @@
 
 
                 </script>
-                <button class="btn btn-primary" onclick="sendTestRequest()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> 发送请求</button>
+                <button class="btn btn-primary" type="button" onclick="sendTestRequest()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> 发送请求</button>
             </div>
         </div>
         <div id="response-panel" class="panel panel-default">
@@ -74,6 +74,10 @@
                     <li role="presentation" id="response-body-tab" class="active"><a onclick="switchResponseTab('body')">Body</a></li>
                 </ul>
                 <!--三个状态-->
+
+                <input type="hidden" name="response_headers" id="response-headers-input">
+                <input type="hidden" name="response_body" id="response-body-input">
+
 
                 <pre id="headers-shower" class="ace_editor" style="min-height:300px;margin-top: 5px;display:none;"><textarea class="ace_text-input"></textarea></pre>
                 {{--<pre id="params-editor" class="ace_editor" style="min-height:300px;margin-top: 5px;display:none"><textarea class="ace_text-input"></textarea></pre>--}}

@@ -36,10 +36,10 @@
         <input id="request-headers-editor-input" name="request_headers" type="hidden" value="{{$requestHeaders}}">
         <input id="request-params-editor-input" name="request_params" type="hidden" value="{{$requestParam}}">
         <input id="request-body-editor-input" name="request_body" type="hidden" value="{{$requestBody}}">
-        <input id="request-example-editor-input" name="request_params" type="hidden" value="{{$requestExample}}">
+        <input id="request-example-editor-input" name="request_example" type="hidden" value="{{$requestExample}}">
         <input id="response-headers-editor-input" name="response_headers" type="hidden" value="{{$responseHeaders}}">
         <input id="response-body-editor-input" name="response_body" type="hidden" value="{{$responseBody}}">
-        <input id="response-example-editor-input" name="response_body" type="hidden" value="{{$responseExample}}">
+        <input id="response-example-editor-input" name="response_example" type="hidden" value="{{$responseExample}}">
 
         <div class="panel panel-default" id="API-REQUEST-HEADERS">
             <div class="panel-heading">
@@ -136,6 +136,7 @@
             console.log(value);
             console.log(input);
             if (isJSON(input)) {
+                console.log(value+'s input is json');
                 input = JSON.parse(input);
                 editor.setValue(JSON.stringify(input,null,'\t'));
             }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\Utils;
 use Illuminate\Http\Request;
 
 class ApiDocController extends Controller
@@ -31,16 +32,52 @@ class ApiDocController extends Controller
             $requestBody = $this->formatBody($requestBody);
         }
 
+        $responseHeaders = $request->input('response_headers',null);
+
+        if ($responseHeaders != null) {
+            $responseHeaders = json_decode($responseHeaders,true);
+            $responseHeaders = $this->formatHeader($responseHeaders);
+        }
+
+        $responseBody = $request->input('response_body',null);
+
+        if ($responseBody != null) {
+            $responseBody = json_decode($responseBody,true);
+            $responseBody = $this->formatBody($responseBody);
+        }
+
+        $requestParam = $request->input('api_url',null);
+
+        $params = [];
+        $url = $requestParam;
+
+        if (is_string($requestParam)) {
+            $andIndex = strpos($requestParam,'?');
+            if ($andIndex > 0) {
+                $url = substr($requestParam,0,$andIndex);
+                $requestParam = substr($requestParam,$andIndex+1);
+                $requestParam = explode('&',$requestParam);
+                foreach ($requestParam as $param) {
+                    $key = explode('=',$param)[0];
+                    $params[] = [
+                        'param_key' => $key,
+                        'param_type' => '',
+                        'param_description' => ''
+                    ];
+                }
+            }
+        }
+
         $data = [
-            'apiUrl' => $request->input('api_url',null),
+            'apiUrl' => $url,
             'apiMethod' => $request->input('api_method',null),
             'requestHeaders' => json_encode($requestHeaders),
             'requestBody' => json_encode($requestBody),
-            'requestParam' => '',
-            'responseHeaders' => '',
-            'responseBody' => '',
-            'requestExample' => '',
-            'responseExample' => ''
+            'requestParam' => json_encode($params),
+            'responseHeaders' => json_encode($responseHeaders),
+            'responseBody' => json_encode($responseBody),
+            'requestExample' => $request->input('request_body',null),
+            'responseExample' => $request->input('response_body',null),
         ];
 
         return view('apiEdit',$data);
@@ -69,16 +106,33 @@ class ApiDocController extends Controller
     private function formatBody(array $body,string $prefix='')
     {
         $formatted = [];
-        foreach ($body as $key =>$value) {
-//            if (is_array($value)) {
-//                array_push($formatted,$this->formatBody($body,$key));
-//            }
-            $formatted[] =[
-                'body_key' => $prefix.$key,
-                'body_type' => '',
-                'body_description' => ''
-            ];
+
+        // 对象数组默认所有数组中的对象全部同构，只保留第一个
+
+        while(!Utils::is_assoc($body)&&!empty($body)) {
+            $body = $body[0];
         }
+
+        foreach ($body as $key =>$value) {
+            if ($prefix == '') {
+                $formatted[] =[
+                    'body_key' => $key,
+                    'body_type' => '',
+                    'body_description' => ''
+                ];
+            }else {
+                $formatted[] =[
+                    'body_key' => $prefix.'.'.$key,
+                    'body_type' => '',
+                    'body_description' => ''
+                ];
+            }
+            if (Utils::is_assoc($value)) {
+                $child = $this->formatBody($value,$key);
+                $formatted = array_merge($formatted,$child);
+            }
+        }
+
         return $formatted;
     }
 }

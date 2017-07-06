@@ -90,6 +90,10 @@ function switchResponseTab(tabName) {
 function setFormValue() {
     var requestHeaders = ace.edit("headers-editor").getValue();
     var requestBody = ace.edit("body-editor").getValue();
+    var responseHeaders = ace.edit("headers-shower").getValue();
+    var responseBody = ace.edit("body-shower").getValue();
     document.getElementById("request-headers-input").setAttribute("value",requestHeaders);
     document.getElementById("request-body-input").setAttribute("value",requestBody);
+    document.getElementById("response-headers-input").setAttribute("value",responseHeaders);
+    document.getElementById("response-body-input").setAttribute("value",responseBody);
 }
