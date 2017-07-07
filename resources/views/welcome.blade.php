@@ -80,7 +80,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>One Leaf
+                    <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Api Leaf
                 </div>
 
                 <div class="links">

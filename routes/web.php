@@ -24,3 +24,7 @@ Route::get('/test-api','RequestTestController@getIndex');
 
 Route::get('/edit-api','ApiDocController@editApiDoc');
 Route::post('/edit-api','ApiDocController@editApiDoc');
+
+Route::get('/api-doc',function (){
+    return view('apidoc');
+});

@@ -10,6 +10,8 @@
                 <h3 class="panel-title">Request</h3>
             </div>
             <div class="panel-body">
+                <!-- 警告框 -->
+                <div class="alert alert-info" id="input-dismissible" role="alert" style="display: none;">请输入正确的地址！</div>
                 <!-- URL输入框 -->
                 <h5>URL</h5>
                 <div class="input-group">
@@ -31,9 +33,9 @@
                 <br>
                 <!--请求配置选项卡-->
                 <ul class="nav nav-tabs">
-                    <li role="presentation" id="request-headers-tab" class="active"><a onclick="switchRequestTab('headers')">Headers</a></li>
+                    <li role="presentation" id="request-headers-tab" class="active"><a onclick="switchRequestTabHead('headers')">Headers</a></li>
                     {{--<li role="presentation" id="params-tab"><a onclick="switchTab('params')">Params</a></li>--}}
-                    <li role="presentation" id="request-body-tab"><a onclick="switchRequestTab('body')">Body</a></li>
+                    <li role="presentation" id="request-body-tab" class="nav disabled"><a onclick="switchRequestTabBody('body')">Body</a></li>
                 </ul>
                 <!--三个状态-->
 

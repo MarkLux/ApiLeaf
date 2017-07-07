@@ -41,6 +41,15 @@ function refreshStatusPanel(statusCode) {
 }
 
 function sendTestRequest() {
+
+    var inputValue = document.getElementById("request-url").value;
+    var reg = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/;
+    if(!reg.test(inputValue)){
+        document.getElementById('input-dismissible').style.display="block";
+    }else{
+        document.getElementById('input-dismissible').style.display="none";
+    }
+
     var inputs =  getRequestInputs();
 
     console.log(inputs);
@@ -65,6 +74,41 @@ function sendTestRequest() {
 function switchMethod(method) {
     document.getElementById("request-method").innerHTML = method;
     document.getElementById("request-method-input").setAttribute("value",method);
+
+    if (method === 'GET') {
+        document.getElementById('request-body-tab').className = 'nav disabled';
+        switchRequestTabHead('headers');
+    }
+    if (method !== 'GET') {
+        document.getElementById('request-body-tab').className = 'nav nav-tabs';
+    }
+
+}
+
+function switchRequestTabBody (tabName) {
+    if (document.getElementById('request-method').innerHTML === 'GET'){
+        document.getElementById('request-body-tab').className = 'disabled'
+    }
+
+    else {
+        tabNames.forEach(function (value, index, array) {
+            document.getElementById(value + '-editor').style.display = 'none'
+            document.getElementById('request-' + value + '-tab').className = null
+        })
+
+        document.getElementById(tabName + '-editor').style.display = 'block'
+        document.getElementById('request-' + tabName + '-tab').className = 'active'
+    }
+}
+
+function switchRequestTabHead (tabName) {
+    tabNames.forEach(function (value, index, array) {
+        document.getElementById(value + '-editor').style.display = 'none';
+        document.getElementById('request-' + value + '-tab').className = null;
+    });
+
+    document.getElementById(tabName + '-editor').style.display = 'block';
+    document.getElementById('request-' + tabName + '-tab').className = 'active';
 }
 
 function switchRequestTab(tabName) {

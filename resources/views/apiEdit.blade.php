@@ -104,8 +104,12 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>&nbsp生成文档!</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="checkInput()" ><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>&nbsp生成文档!</button>
 
+    </div>
+
+    <div class="alert alert-info" id="warning" role="alert" style="margin-top:20px;display: none;">
+        <a href="#head" class="alert-link">请把内容补充完整！</a>
     </div>
 
     <footer>
@@ -147,13 +151,22 @@
                 try {
                     JSON.parse(str);
                     return true;
-                } catch(e) {
+                } catch (e) {
                     console.log(e);
                     return false;
                 }
             }
-            console.log('It is not a string!')
         }
+
+        function checkInput () {
+            if (document.getElementById('input1').value === '' || document.getElementById('input2').value === '' || document.getElementById('input3').value === '' || document.getElementById('input4').value === '') {
+                document.getElementById('warning').style.display = 'block'
+            }
+            if (document.getElementById('input1').value !== '' && document.getElementById('input2').value !== '' && document.getElementById('input3').value !== '' && document.getElementById('input4').value !== '') {
+                document.getElementById('warning').style.display = 'none'
+            }
+        }
+
     </script>
 
 @endsection
