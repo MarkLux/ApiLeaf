@@ -16,11 +16,16 @@ class CreateApiInfosTable extends Migration
         Schema::create('api_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
+            $table->string('collection_id');
+            $table->string('api_url');
             $table->string('api_name');
-            $table->string('api_collection');
-            $table->string('api_description');
-            $table->json('api_request');
-            $table->json('api_response');
+            $table->string('api_method');
+            $table->string('api_description')->nullable();
+            $table->json('api_request_headers')->nullable();
+            $table->json('api_request_body')->nullable();
+            $table->json('api_request_params')->nullable();
+            $table->json('api_response_headers')->nullable();
+            $table->json('api_response_body')->nullable();
             $table->timestamps();
         });
     }
