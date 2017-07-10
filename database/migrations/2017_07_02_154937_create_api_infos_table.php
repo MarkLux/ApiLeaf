@@ -24,8 +24,10 @@ class CreateApiInfosTable extends Migration
             $table->json('api_request_headers')->nullable();
             $table->json('api_request_body')->nullable();
             $table->json('api_request_params')->nullable();
+            $table->json('api_request_example')->nullable();
             $table->json('api_response_headers')->nullable();
             $table->json('api_response_body')->nullable();
+            $table->json('api_response_example')->nullable();
             $table->timestamps();
         });
     }

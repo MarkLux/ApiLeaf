@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\ApiInfo;
 use App\Common\Utils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApiDocController extends Controller
 {
@@ -83,9 +85,36 @@ class ApiDocController extends Controller
         return view('apiEdit',$data);
     }
 
-    //
+    /*
+     * 将数据保存到数据库
+     */
+
     public function generate(Request $request)
     {
+        $this->validate($request->all(),[
+            'api_url' => 'required',
+            'api_name' => 'required',
+            'api_method' => 'required',
+            'api_request_headers' => 'json',
+            'api_request_body' => 'json',
+            'api_request_params' => 'json',
+            'api_response_headers' => 'json',
+            'api_response_body' => 'json',
+            'api_response_example' => 'json',
+            'api_request_example' => 'json',
+        ]);
+
+        $apiInfo = $request->all();
+        $apiInfo['collection_id'] = 1;
+        $apiInfo['user_id'] = 1;
+
+        $apiId = DB::table('api_infos')->insertGetId($request->all());
+
+        dd($apiId);
+
+        return view('item_preview',[
+            'apiInfo' => DB::table('api_infos')->where('id',$apiId)->get(['*'])->first()
+        ]);
 
     }
 
