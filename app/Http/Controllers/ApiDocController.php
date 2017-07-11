@@ -20,47 +20,47 @@ class ApiDocController extends Controller
 //            'response_body' => 'required|json',
 //        ]);
 
-        $requestHeaders = $request->input('request_headers',null);
+        $requestHeaders = $request->input('request_headers', null);
 
         if ($requestHeaders != null) {
-            $requestHeaders = json_decode($requestHeaders,true);
+            $requestHeaders = json_decode($requestHeaders, true);
             $requestHeaders = $this->formatHeader($requestHeaders);
         }
 
-        $requestBody = $request->input('request_body',null);
+        $requestBody = $request->input('request_body', null);
 
         if ($requestBody != null) {
-            $requestBody = json_decode($requestBody,true);
+            $requestBody = json_decode($requestBody, true);
             $requestBody = $this->formatBody($requestBody);
         }
 
-        $responseHeaders = $request->input('response_headers',null);
+        $responseHeaders = $request->input('response_headers', null);
 
         if ($responseHeaders != null) {
-            $responseHeaders = json_decode($responseHeaders,true);
+            $responseHeaders = json_decode($responseHeaders, true);
             $responseHeaders = $this->formatHeader($responseHeaders);
         }
 
-        $responseBody = $request->input('response_body',null);
+        $responseBody = $request->input('response_body', null);
 
         if ($responseBody != null) {
-            $responseBody = json_decode($responseBody,true);
+            $responseBody = json_decode($responseBody, true);
             $responseBody = $this->formatBody($responseBody);
         }
 
-        $requestParam = $request->input('api_url',null);
+        $requestParam = $request->input('api_url', null);
 
         $params = [];
         $url = $requestParam;
 
         if (is_string($requestParam)) {
-            $andIndex = strpos($requestParam,'?');
+            $andIndex = strpos($requestParam, '?');
             if ($andIndex > 0) {
-                $url = substr($requestParam,0,$andIndex);
-                $requestParam = substr($requestParam,$andIndex+1);
-                $requestParam = explode('&',$requestParam);
+                $url = substr($requestParam, 0, $andIndex);
+                $requestParam = substr($requestParam, $andIndex + 1);
+                $requestParam = explode('&', $requestParam);
                 foreach ($requestParam as $param) {
-                    $key = explode('=',$param)[0];
+                    $key = explode('=', $param)[0];
                     $params[] = [
                         'param_key' => $key,
                         'param_type' => '',
@@ -72,17 +72,17 @@ class ApiDocController extends Controller
 
         $data = [
             'apiUrl' => $url,
-            'apiMethod' => $request->input('api_method',null),
+            'apiMethod' => $request->input('api_method', null),
             'requestHeaders' => json_encode($requestHeaders),
             'requestBody' => json_encode($requestBody),
             'requestParam' => json_encode($params),
             'responseHeaders' => json_encode($responseHeaders),
             'responseBody' => json_encode($responseBody),
-            'requestExample' => $request->input('request_body',null),
-            'responseExample' => $request->input('response_body',null),
+            'requestExample' => $request->input('request_body', null),
+            'responseExample' => $request->input('response_body', null),
         ];
 
-        return view('apiEdit',$data);
+        return view('apiEdit', $data);
     }
 
     /*
@@ -91,7 +91,7 @@ class ApiDocController extends Controller
 
     public function generate(Request $request)
     {
-        $this->validate($request->all(),[
+        $this->validate($request, [
             'api_url' => 'required',
             'api_name' => 'required',
             'api_method' => 'required',
@@ -108,13 +108,25 @@ class ApiDocController extends Controller
         $apiInfo['collection_id'] = 1;
         $apiInfo['user_id'] = 1;
 
-        $apiId = DB::table('api_infos')->insertGetId($request->all());
+        $apiId = DB::table('api_infos')->insertGetId($apiInfo);
 
-        dd($apiId);
+        $api = DB::table('api_infos')->where('id', $apiId)->get(['*'])->first();
 
-        return view('item_preview',[
-            'apiInfo' => DB::table('api_infos')->where('id',$apiId)->get(['*'])->first()
-        ]);
+        $data = [
+            'apiName' => $api->api_name,
+            'apiUrl' => $api->api_url,
+            'apiDescription' => $api->api_description,
+            'apiMethod' => $api->api_method,
+            'requestHeaders' => json_decode($api->request_headers, true),
+            'requestBody' => json_decode($api->request_body, true),
+            'requestParams' => json_decode($api->request_params, true),
+            'requestExample' => $api->request_example,
+            'responseHeaders' => json_decode($api->response_headers, true),
+            'responseBody' => json_decode($api->response_body, true),
+            'responseExample' => $api->response_example
+        ];
+
+        return view('item_preview', $data);
 
     }
 
@@ -132,35 +144,37 @@ class ApiDocController extends Controller
         return $formatted;
     }
 
-    private function formatBody(array $body,string $prefix='')
+    private function formatBody(array $body, string $prefix = '')
     {
         $formatted = [];
 
         // 对象数组默认所有数组中的对象全部同构，只保留第一个
-
-        while(!Utils::is_assoc($body)&&!empty($body)) {
+        while (!Utils::is_assoc($body) && !empty($body)) {
             $body = $body[0];
         }
 
-        foreach ($body as $key =>$value) {
-            if ($prefix == '') {
-                $formatted[] =[
-                    'body_key' => $key,
-                    'body_type' => '',
-                    'body_description' => ''
-                ];
-            }else {
-                $formatted[] =[
-                    'body_key' => $prefix.'.'.$key,
-                    'body_type' => '',
-                    'body_description' => ''
-                ];
-            }
-            if (Utils::is_assoc($value)) {
-                $child = $this->formatBody($value,$key);
-                $formatted = array_merge($formatted,$child);
+        if (is_array($body)) {
+            foreach ($body as $key => $value) {
+                if ($prefix == '') {
+                    $formatted[] = [
+                        'body_key' => $key,
+                        'body_type' => '',
+                        'body_description' => ''
+                    ];
+                } else {
+                    $formatted[] = [
+                        'body_key' => $prefix . '.' . $key,
+                        'body_type' => '',
+                        'body_description' => ''
+                    ];
+                }
+                if (is_array($value)) {
+                    $child = $this->formatBody($value, $key);
+                    $formatted = array_merge($formatted, $child);
+                }
             }
         }
+
 
         return $formatted;
     }

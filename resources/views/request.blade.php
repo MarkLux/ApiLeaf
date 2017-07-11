@@ -3,7 +3,7 @@
 @section('content')
     <script src="{{url('/')}}/js/request.js"></script>
     <script src="https://cdn.bootcss.com/ace/1.2.7/ace.js"></script>
-    <form action="{{url('/')}}/edit-api" method="POST">
+    <form action="{{url('/')}}/api/edit" method="POST">
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -72,7 +72,6 @@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li role="presentation" id="response-headers-tab" ><a onclick="switchResponseTab('headers')">Headers</a></li>
-                    {{--<li role="presentation" id="params-tab"><a onclick="switchTab('params')">Params</a></li>--}}
                     <li role="presentation" id="response-body-tab" class="active"><a onclick="switchResponseTab('body')">Body</a></li>
                 </ul>
                 <!--三个状态-->

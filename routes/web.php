@@ -19,12 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::post('/test-api','RequestTestController@sendTestRequest');
-Route::get('/test-api','RequestTestController@getIndex');
+Route::post('/api/test','RequestTestController@sendTestRequest');
+Route::get('/api/test','RequestTestController@getIndex');
 
-Route::get('/edit-api','ApiDocController@editApiDoc');
-Route::post('/edit-api','ApiDocController@editApiDoc');
+Route::get('/api/edit','ApiDocController@editApiDoc');
+Route::post('/api/edit','ApiDocController@editApiDoc');
 
-Route::get('/api-doc',function (){
-    return view('apidoc');
-});
+Route::post('/api/generate','ApiDocController@generate');
+
+
+Route::get('/test','ApiDocController@generate');

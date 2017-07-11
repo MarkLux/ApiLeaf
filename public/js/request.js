@@ -34,7 +34,7 @@ function refreshStatusPanel(statusCode) {
     } else if (statusCode === 301 || statusCode === 302) {
         panel.className = "panel panel-info";
     } else if (statusCode === 403 || statusCode === 404) {
-        panel.className = "panel panel-waring";
+        panel.className = "panel panel-warning";
     }
 
     document.getElementById("status-code").innerHTML = statusCode;
@@ -46,6 +46,7 @@ function sendTestRequest() {
     var reg = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/;
     if(!reg.test(inputValue)){
         document.getElementById('input-dismissible').style.display="block";
+        return false;
     }else{
         document.getElementById('input-dismissible').style.display="none";
     }
@@ -54,7 +55,7 @@ function sendTestRequest() {
 
     console.log(inputs);
 
-    fetch("/test-api",{
+    fetch("/api/test",{
         method:'POST',
             body:JSON.stringify(inputs),
             headers:{

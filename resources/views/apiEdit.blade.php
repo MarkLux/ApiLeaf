@@ -2,44 +2,39 @@
 
 @section('content')
     <script src="https://cdn.bootcss.com/ace/1.2.7/ace.js"></script>
+    <script src="{{url('/js')}}/edit.js"></script>
     <br>
     <div class="container">
+
+        <form action="{{url('/api/generate')}}" method="POST">
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">API 基本信息</h3>
             </div>
             <div class="panel-body">
+
                 <div class="input-group" id="API-NAME">
                     <span class="input-group-addon" id="basic-addon1">NAME</span>
-                    <input type="text" class="form-control" placeholder="API NAME" aria-describedby="basic-addon1" >
+                    <input type="text" id="api-name" name="api_name" class="form-control" placeholder="API NAME" aria-describedby="basic-addon1" >
                 </div>
                 <br>
                 <div class="input-group" id="API-URL">
                     <span class="input-group-addon" id="basic-addon1">URL</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" value="{{$apiUrl}}">
+                    <input type="text" id="api-url" class="form-control" aria-describedby="basic-addon1" name="api_url" value="{{$apiUrl}}">
                 </div>
                 <br>
                 <div class="input-group" id="API-METHOD">
                     <span class="input-group-addon" id="basic-addon1">METHOD</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" value="{{$apiMethod}}">
+                    <input type="text" id="api-method" class="form-control" aria-describedby="basic-addon1" name="api_method" value="{{$apiMethod}}">
                 </div>
                 <br>
                 <div class="input-group" id="API-DESCRIPTION">
                     <span class="input-group-addon" id="basic-addon1">DESCRIPTION</span>
-                    <input type="text" class="form-control" placeholder="the description" aria-describedby="basic-addon1">
+                    <input type="text" id="api-description" class="form-control" placeholder="the description" name="api_description" aria-describedby="basic-addon1">
                 </div>
             </div>
         </div>
-
-        <!--实际存放内容的隐藏input-->
-
-        <input id="request-headers-editor-input" name="request_headers" type="hidden" value="{{$requestHeaders}}">
-        <input id="request-params-editor-input" name="request_params" type="hidden" value="{{$requestParam}}">
-        <input id="request-body-editor-input" name="request_body" type="hidden" value="{{$requestBody}}">
-        <input id="request-example-editor-input" name="request_example" type="hidden" value="{{$requestExample}}">
-        <input id="response-headers-editor-input" name="response_headers" type="hidden" value="{{$responseHeaders}}">
-        <input id="response-body-editor-input" name="response_body" type="hidden" value="{{$responseBody}}">
-        <input id="response-example-editor-input" name="response_example" type="hidden" value="{{$responseExample}}">
 
         <div class="panel panel-default" id="API-REQUEST-HEADERS">
             <div class="panel-heading">
@@ -104,13 +99,24 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-primary btn-lg" onclick="checkInput()" ><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>&nbsp生成文档!</button>
+        <div class="alert alert-info" id="warning" role="alert" style="margin-top:20px;display: none;">
+            <strong id="validate-message">请检查您的输入</strong>
+        </div>
+
+
+            <input id="request-headers-input" name="request_headers" type="hidden" value="{{$requestHeaders}}">
+            <input id="request-params-input" name="request_params" type="hidden" value="{{$requestParam}}">
+            <input id="request-body-input" name="request_body" type="hidden" value="{{$requestBody}}">
+            <input id="request-example-input" name="request_example" type="hidden" value="{{$requestExample}}">
+            <input id="response-headers-input" name="response_headers" type="hidden" value="{{$responseHeaders}}">
+            <input id="response-body-input" name="response_body" type="hidden" value="{{$responseBody}}">
+            <input id="response-example-input" name="response_example" type="hidden" value="{{$responseExample}}">
+            <button type="submit" class="btn btn-primary btn-lg" onclick="checkBeforeSubmit()"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>&nbsp生成文档!</button>
+        </form>
 
     </div>
 
-    <div class="alert alert-info" id="warning" role="alert" style="margin-top:20px;display: none;">
-        <a href="#head" class="alert-link">请把内容补充完整！</a>
-    </div>
+    <!--实际存放内容的隐藏input-->
 
     <footer>
         <br>
@@ -118,18 +124,8 @@
     </footer>
 
     <script>
-        editors = [
-            "request-headers-editor",
-            "request-params-editor",
-            "request-body-editor",
-            "request-example-editor",
-            "response-headers-editor",
-            "response-body-editor",
-            "response-example-editor"
-        ];
-
         editors.forEach(function (value, index, array) {
-            editor = ace.edit(value);
+            editor = ace.edit(value+'-editor');
             theme = "clouds";
             language = "json";
 
@@ -137,35 +133,11 @@
             editor.session.setMode("ace/mode/" + language);
             editor.setFontSize(14);
             var input = document.getElementById(value+'-input').getAttribute("value");
-            console.log(value);
-            console.log(input);
             if (isJSON(input)) {
-                console.log(value+'s input is json');
                 input = JSON.parse(input);
                 editor.setValue(JSON.stringify(input,null,'\t'));
             }
         });
-
-        function isJSON(str) {
-            if (typeof str === 'string') {
-                try {
-                    JSON.parse(str);
-                    return true;
-                } catch (e) {
-                    console.log(e);
-                    return false;
-                }
-            }
-        }
-
-        function checkInput () {
-            if (document.getElementById('input1').value === '' || document.getElementById('input2').value === '' || document.getElementById('input3').value === '' || document.getElementById('input4').value === '') {
-                document.getElementById('warning').style.display = 'block'
-            }
-            if (document.getElementById('input1').value !== '' && document.getElementById('input2').value !== '' && document.getElementById('input3').value !== '' && document.getElementById('input4').value !== '') {
-                document.getElementById('warning').style.display = 'none'
-            }
-        }
 
     </script>
 
