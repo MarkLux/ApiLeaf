@@ -3,7 +3,6 @@
 @section('content')
     <script src="https://cdn.bootcss.com/ace/1.2.7/ace.js"></script>
     <script src="{{url('/js')}}/edit.js"></script>
-    <br>
     <div class="container">
 
         <form action="{{url('/api/generate')}}" method="POST">

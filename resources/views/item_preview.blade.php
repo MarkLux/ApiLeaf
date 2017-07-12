@@ -2,7 +2,6 @@
 @section('content')
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     <script src="{{url('/js')}}/preview.js"></script>
-    <br>
     <div class="container">
         <blockquote>
             <span style="font-size: 24px">{{$apiName}}</span>

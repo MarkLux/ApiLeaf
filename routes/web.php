@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/logout','Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index');
 
@@ -29,3 +30,4 @@ Route::post('/api/generate','ApiDocController@generate');
 
 
 Route::get('/test','ApiDocController@generate');
+Route::get('/api/doc/{id}','ApiDocController@renderDoc');

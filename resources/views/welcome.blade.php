@@ -63,6 +63,12 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            @media screen and (max-width: 768px) {
+                #logo{
+                    display: none;
+                }
+            }
         </style>
     </head>
     <body>
@@ -70,10 +76,10 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">主面板</a>
                     @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
+                        <a href="{{ url('/login') }}">登录</a>
+                        <a href="{{ url('/register') }}">注册</a>
                     @endif
                 </div>
             @endif
@@ -82,7 +88,7 @@
                 <div class="title m-b-md">
                     {{--<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Api Leaf--}}
                      Api Leaf
-                    <span>
+                    <span id="logo">
                         <svg width="79px" height="75px" viewBox="0 0 79 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">

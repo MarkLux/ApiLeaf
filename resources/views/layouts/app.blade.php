@@ -14,6 +14,17 @@
     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-weight: 200;
+        }
+        h1 {
+            font-weight: 200;
+        }
+        h4 {
+            font-weight: 200;
+        }
+    </style>
     <title>Test</title>
 </head>
 <body>
@@ -22,6 +33,7 @@
 
 <div  style="height:60px">
 </div>
+<br>
 @yield('content')
 <!--footer-->
 </body>

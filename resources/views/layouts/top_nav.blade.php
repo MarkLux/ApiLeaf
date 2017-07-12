@@ -21,7 +21,20 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#">登录</a>
+                    @if(\Illuminate\Support\Facades\Auth::check())
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-labelledby="dropdownMenu4">
+                            {{\Illuminate\Support\Facades\Auth::user()->name}}           <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{url('/home')}}">主面板</a>
+                            </li>
+                            <li>
+                                <a href="{{url('/logout')}}">登出</a>
+                            </li>
+                        </ul>
+                    @else
+                    @endif
                 </li>
             </ul>
 

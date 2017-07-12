@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ApiInfo;
 use App\Common\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -130,13 +129,38 @@ class ApiDocController extends Controller
 
     }
 
+    public function renderDoc(Request $request,int $collectionId)
+    {
+        $collectionInfo = DB::table('api_collections')
+            ->where('id',$collectionId)
+            ->first();
+
+        $apiInfos = DB::table('api_infos')
+            ->where('collection_id',$collectionId)
+            ->get();
+
+        foreach ($apiInfos as $api) {
+            $api->request_params = json_decode($api->request_params,true);
+            $api->request_headers = json_decode($api->request_headers,true);
+            $api->request_body = json_decode($api->request_body,true);
+            $api->response_headers = json_decode($api->response_headers,true);
+            $api->response_body = json_decode($api->response_body,true);
+
+        }
+
+        return view('apidoc',[
+            'collectionInfo' => $collectionInfo,
+            'apiInfos' => $apiInfos
+        ]);
+    }
+
     private function formatHeader($headers)
     {
         $formatted = [];
         foreach ($headers as $key => $value) {
             $formatted[] = [
                 'header_key' => $key,
-                'header_type' => '',
+                'header_type' => gettype($value),
                 'header_description' => ''
             ];
         }
@@ -158,13 +182,13 @@ class ApiDocController extends Controller
                 if ($prefix == '') {
                     $formatted[] = [
                         'body_key' => $key,
-                        'body_type' => '',
+                        'body_type' => gettype($value),
                         'body_description' => ''
                     ];
                 } else {
                     $formatted[] = [
                         'body_key' => $prefix . '.' . $key,
-                        'body_type' => '',
+                        'body_type' => gettype($value),
                         'body_description' => ''
                     ];
                 }
