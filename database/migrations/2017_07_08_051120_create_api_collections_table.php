@@ -15,7 +15,7 @@ class CreateApiCollectionsTable extends Migration
     {
         Schema::create('api_collections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100);
+            $table->string('title',100);
             $table->string('description')->nullable();
             $table->integer('owner_id');
             $table->timestamps();

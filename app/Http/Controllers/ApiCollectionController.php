@@ -30,7 +30,7 @@ class ApiCollectionController extends Controller
             return view('errors.404');
         }
 
-        if (Auth::user()->id != $collection->user_id) {
+        if (Auth::user()->id != $collection->owner_id) {
             return view('errors.503');
         }
 
@@ -79,7 +79,7 @@ class ApiCollectionController extends Controller
         DB::table('api_collections')->insert([
             'title' => $request->name,
             'description' => $request->description,
-            'user_id' => $request->user()->id,
+            'owner_id' => $request->user()->id,
             'created_at' => $current,
             'updated_at' => $current
         ]);
