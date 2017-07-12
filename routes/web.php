@@ -42,3 +42,7 @@ Route::post('/collection/create','ApiCollectionController@postCreate');
 Route::get('/collection/update/{id}','ApiCollectionController@getUpdate');
 Route::post('/collection/update/{id}','ApiCollectionController@postUpdate');
 Route::get('/collection/delete/{id}','ApiCollectionController@delete');
+
+Route::get('/about',function () {
+    return view('about');
+});

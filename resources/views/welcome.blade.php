@@ -75,6 +75,7 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
+                    <a href="{{url('/about')}}">关于</a>
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">主面板</a>
                     @else
