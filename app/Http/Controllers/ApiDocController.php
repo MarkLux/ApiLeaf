@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Common\Utils;
+use App\ViewComposer\CollectionHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ApiDocController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('renderDoc');
+    }
+
     public function editApiDoc(Request $request)
     {
 //        $this->validate($request->all(), [
@@ -81,14 +87,14 @@ class ApiDocController extends Controller
             'responseExample' => $request->input('response_body', null),
         ];
 
-        return view('apiEdit', $data);
+        return view('api_edit', $data);
     }
 
     /*
      * 将数据保存到数据库
      */
 
-    public function generate(Request $request)
+    public function generate(Request $request,CollectionHelper $helper)
     {
         $this->validate($request, [
             'api_url' => 'required',
@@ -101,17 +107,22 @@ class ApiDocController extends Controller
             'api_response_body' => 'json',
             'api_response_example' => 'json',
             'api_request_example' => 'json',
+            'collection_id' => 'required|integer'
         ]);
 
+        if (!$helper->canUserAccess($request['collection_id'])) {
+            return view('errors.503');
+        }
+
         $apiInfo = $request->all();
-        $apiInfo['collection_id'] = 1;
-        $apiInfo['user_id'] = 1;
+        $apiInfo['user_id'] = $request->user()->id;
 
         $apiId = DB::table('api_infos')->insertGetId($apiInfo);
 
         $api = DB::table('api_infos')->where('id', $apiId)->get(['*'])->first();
 
         $data = [
+            'apiId' => $api->id,
             'apiName' => $api->api_name,
             'apiUrl' => $api->api_url,
             'apiDescription' => $api->api_description,
@@ -122,14 +133,16 @@ class ApiDocController extends Controller
             'requestExample' => $api->request_example,
             'responseHeaders' => json_decode($api->response_headers, true),
             'responseBody' => json_decode($api->response_body, true),
-            'responseExample' => $api->response_example
+            'responseExample' => $api->response_example,
+            'collectionId' => $api->collection_id,
+            'message' => '文档已生成'
         ];
 
         return view('item_preview', $data);
 
     }
 
-    public function renderDoc(Request $request,int $collectionId)
+    public function renderDoc(Request $request,int $collectionId,CollectionHelper $helper)
     {
         $collectionInfo = DB::table('api_collections')
             ->where('id',$collectionId)
@@ -150,8 +163,112 @@ class ApiDocController extends Controller
 
         return view('apidoc',[
             'collectionInfo' => $collectionInfo,
-            'apiInfos' => $apiInfos
+            'apiInfos' => $apiInfos,
+            'editMenuOn' => $helper->canUserAccess($collectionId)
         ]);
+    }
+
+    public function getUpdate(Request $request,CollectionHelper $helper,int $id)
+    {
+        $api = DB::table('api_infos')->where('id',$id)->first();
+
+        if ($api == null) {
+            return view('errors.404');
+        }
+
+        if (!$helper->canUserAccess($api->collection_id)) {
+            return view('errors.503');
+        }
+
+        $data = [
+            'apiId' => $api->id,
+            'apiName' => $api->api_name,
+            'apiUrl' => $api->api_url,
+            'apiDescription' => $api->api_description,
+            'apiMethod' => $api->api_method,
+            'requestHeaders' => $api->request_headers,
+            'requestBody' => $api->request_body,
+            'requestParam' => $api->request_params,
+            'requestExample' => $api->request_example,
+            'responseHeaders' => $api->response_headers,
+            'responseBody' => $api->response_body,
+            'responseExample' => $api->response_example,
+            'collectionId' => $api->collection_id
+        ];
+
+        return view('api_update',$data);
+    }
+
+    public function postUpdate(Request $request,CollectionHelper $helper,int $id)
+    {
+        $this->validate($request, [
+            'api_url' => 'required',
+            'api_name' => 'required',
+            'api_method' => 'required',
+            'api_request_headers' => 'json',
+            'api_request_body' => 'json',
+            'api_request_params' => 'json',
+            'api_response_headers' => 'json',
+            'api_response_body' => 'json',
+            'api_response_example' => 'json',
+            'api_request_example' => 'json',
+            'collection_id' => 'required|integer'
+        ]);
+
+        $api = DB::table('api_infos')->where('id',$id)->get(['collection_id','id'])->first();
+
+        if ($api == null) {
+            return view('errors.404');
+        }
+
+        if (!$helper->canUserAccess($api->collection_id)) {
+            return view('errors.503');
+        }
+
+        $apiInfo = $request->all();
+        $apiInfo['user_id'] = $request->user()->id;
+
+         DB::table('api_infos')->where('id',$id)->update($apiInfo);
+
+        $api = DB::table('api_infos')->where('id', $id)->get(['*'])->first();
+
+        $data = [
+            'apiId' => $api->id,
+            'apiName' => $api->api_name,
+            'apiUrl' => $api->api_url,
+            'apiDescription' => $api->api_description,
+            'apiMethod' => $api->api_method,
+            'requestHeaders' => json_decode($api->request_headers, true),
+            'requestBody' => json_decode($api->request_body, true),
+            'requestParams' => json_decode($api->request_params, true),
+            'requestExample' => $api->request_example,
+            'responseHeaders' => json_decode($api->response_headers, true),
+            'responseBody' => json_decode($api->response_body, true),
+            'responseExample' => $api->response_example,
+            'collectionId' => $api->collection_id,
+            'message' => '文档已重新生成'
+        ];
+
+        return view('item_preview', $data);
+
+    }
+
+    public function delete(CollectionHelper $helper,int $id)
+    {
+        $api = DB::table('api_infos')->where('id',$id)->get(['collection_id','id'])->first();
+
+        if ($api == null) {
+            return view('errors.404');
+        }
+
+        if (!$helper->canUserAccess($api->collection_id)) {
+            return view('errors.503');
+        }
+
+        DB::table('api_infos')->where('id',$id)->delete();
+
+        return redirect('/api/doc/'.$api->collection_id);
+
     }
 
     private function formatHeader($headers)

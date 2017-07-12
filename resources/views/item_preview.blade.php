@@ -3,6 +3,11 @@
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     <script src="{{url('/js')}}/preview.js"></script>
     <div class="container">
+        <div class="alert alert-success" role="alert">{{$message}}</div>
+        <h4>预览</h4>
+        <hr>
+    </div>
+    <div class="container">
         <blockquote>
             <span style="font-size: 24px">{{$apiName}}</span>
             <p>{{$apiDescription}}</p>
@@ -118,5 +123,13 @@
 
         </div>
 
+        <a href="{{url('/api/test')}}"><button type="button" class="btn btn-primary">继续测试</button></a>
+        <a href="{{url('/api/update/'.$apiId)}}"><button type="button" class="btn btn-primary">编辑</button></a>
+        <a href="{{url('/api/doc/'.$collectionId)}}"><button type="button" class="btn btn-primary">查看该项目文档</button></a>
+
     </div>
+    <footer>
+        <br>
+        <br>
+    </footer>
 @endsection

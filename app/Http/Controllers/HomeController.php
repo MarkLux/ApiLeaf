@@ -28,7 +28,7 @@ class HomeController extends Controller
         $user = Auth::user();
 
         $createdCollections = DB::table('api_collections')
-                                ->where('user_id',$user->id)
+                                ->where('owner_id',$user->id)
                                 ->get(['id','title']);
 
         $sharedCollections = DB::table('collection_shares')

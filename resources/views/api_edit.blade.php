@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@inject('helper','App\ViewComposer\CollectionHelper')
 @section('content')
     <script src="https://cdn.bootcss.com/ace/1.2.7/ace.js"></script>
     <script src="{{url('/js')}}/edit.js"></script>
@@ -12,7 +12,16 @@
                 <h3 class="panel-title">API 基本信息</h3>
             </div>
             <div class="panel-body">
-
+                <div class="input-group" id="API-COLLECTION">
+                    <span class="input-group-addon" id="basic-addon1">COLLECTION</span>
+                    <select name="collection_id" class="form-control">
+                        @foreach($helper->getAccessCollections() as $collection)
+                            <option value="{{$collection['id']}}">{{$collection['title']}}</option>
+                        @endforeach
+                    </select>
+                    {{--<input type="text" id="api-collection" name="api_collection" class="form-control" placeholder="API NAME" aria-describedby="basic-addon1" >--}}
+                </div>
+                <br>
                 <div class="input-group" id="API-NAME">
                     <span class="input-group-addon" id="basic-addon1">NAME</span>
                     <input type="text" id="api-name" name="api_name" class="form-control" placeholder="API NAME" aria-describedby="basic-addon1" >

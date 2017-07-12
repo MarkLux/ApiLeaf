@@ -14,10 +14,15 @@
         <blockquote>
             <span style="font-size: 24px">{{$item->api_name}}</span>
             <p>{{$item->api_description}}</p>
+
         </blockquote>
         <p style="font-size: 16px"><span class="label label-info">{{$item->api_method}}</span>&nbsp {{$item->api_url}}</p>
-
-        <br>
+        @if($editMenuOn)
+            <div class="btn-group" role="group" aria-label="..." style="margin-bottom: 15px">
+                <button type="button" class="btn btn-default"><a href="{{url('/api/update/'.$item->id)}}" style="color:black;">编辑</a></button>
+                <button type="button" class="btn btn-danger"><a href="{{url('/api/delete/'.$item->id)}}" onclick="return confirmDel()" style="color: white">删除</a></button>
+            </div>
+        @endif
         <ul class="nav nav-tabs">
             <li id="{{'request-'.$item->id.'-tab'}}" role="presentation" class="active"><a onclick="{{"switchTab(".$item->id.",'request')"}}"><b>请求</b></a></li>
             <li id="{{'response-'.$item->id.'-tab'}}" role="presentation"><a onclick="{{"switchTab(".$item->id.",'response')"}}"><b>响应</b></a></li>
@@ -128,8 +133,16 @@
             </div>
 
         </div>
-
+        <br>
     </div>
-    <br>
     @endforeach
+    <script>
+        function confirmDel()
+        {
+            if (confirm("确定要删除此文档？"))
+                return true;
+            else
+                return false;
+        }
+    </script>
 @endsection

@@ -26,6 +26,11 @@ Route::get('/api/test','RequestTestController@getIndex');
 Route::get('/api/edit','ApiDocController@editApiDoc');
 Route::post('/api/edit','ApiDocController@editApiDoc');
 
+Route::get('/api/update/{id}','ApiDocController@getUpdate');
+Route::post('/api/update/{id}','ApiDocController@postUpdate');
+
+Route::get('/api/delete/{id}','ApiDocController@delete');
+
 Route::post('/api/generate','ApiDocController@generate');
 
 
