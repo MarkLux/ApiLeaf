@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+
+        $createdCollections = DB::table('api_collections')
+                                ->where('user_id',$user->id)
+                                ->get(['id','title']);
+
+        $sharedCollections = DB::table('collection_shares')
+                                ->where('collection_shares.user_id',$user->id)
+                                ->join('api_collections','api_collections.id','=','collection_shares.collection_id')
+                                ->select('api_collections.id as id','api_collections.title as title')
+                                ->get();
+
+        return view('home',[
+            'createdCollections' => $createdCollections,
+            'sharedCollections' => $sharedCollections
+        ]);
     }
 }

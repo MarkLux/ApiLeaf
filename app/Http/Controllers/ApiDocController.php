@@ -160,7 +160,7 @@ class ApiDocController extends Controller
         foreach ($headers as $key => $value) {
             $formatted[] = [
                 'header_key' => $key,
-                'header_type' => gettype($value),
+                'header_type' => $this->getValueType($value),
                 'header_description' => ''
             ];
         }
@@ -182,13 +182,13 @@ class ApiDocController extends Controller
                 if ($prefix == '') {
                     $formatted[] = [
                         'body_key' => $key,
-                        'body_type' => gettype($value),
+                        'body_type' => $this->getValueType($value),
                         'body_description' => ''
                     ];
                 } else {
                     $formatted[] = [
                         'body_key' => $prefix . '.' . $key,
-                        'body_type' => gettype($value),
+                        'body_type' => $this->getValueType($value),
                         'body_description' => ''
                     ];
                 }
@@ -201,5 +201,16 @@ class ApiDocController extends Controller
 
 
         return $formatted;
+    }
+
+    private function getValueType($value){
+        $type = gettype($value);
+        if ($type == 'array') {
+            if (Utils::is_assoc($value)) {
+                $type = 'object';
+            }
+        }
+
+        return $type;
     }
 }

@@ -31,3 +31,9 @@ Route::post('/api/generate','ApiDocController@generate');
 
 Route::get('/test','ApiDocController@generate');
 Route::get('/api/doc/{id}','ApiDocController@renderDoc');
+
+Route::get('/collection/create','ApiCollectionController@getCreate');
+Route::post('/collection/create','ApiCollectionController@postCreate');
+Route::get('/collection/update/{id}','ApiCollectionController@getUpdate');
+Route::post('/collection/update/{id}','ApiCollectionController@postUpdate');
+Route::get('/collection/delete/{id}','ApiCollectionController@delete');

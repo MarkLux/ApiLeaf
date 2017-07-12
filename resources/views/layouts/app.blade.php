@@ -21,11 +21,16 @@
         h1 {
             font-weight: 200;
         }
+        h3 {
+            font-weight: 200;
+        }
         h4 {
             font-weight: 200;
         }
+        label {
+            font-weight: 200;
+        }
     </style>
-    <title>Test</title>
 </head>
 <body>
 

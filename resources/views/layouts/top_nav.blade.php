@@ -13,11 +13,6 @@
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li >
-                    <a href="{{url('/api/test')}}">测试</a>
-                </li>
-            </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -28,6 +23,9 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="{{url('/home')}}">主面板</a>
+                            </li>
+                            <li>
+                                <a href="{{url('/api/test')}}">发起测试</a>
                             </li>
                             <li>
                                 <a href="{{url('/logout')}}">登出</a>
