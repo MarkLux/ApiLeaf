@@ -148,6 +148,10 @@ class ApiDocController extends Controller
             ->where('id',$collectionId)
             ->first();
 
+        if ($collectionInfo == null) {
+            return view('errors.404');
+        }
+
         $apiInfos = DB::table('api_infos')
             ->where('collection_id',$collectionId)
             ->get();

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://cdn.bootcss.com/prettify/r298/run_prettify.min.js"></script>
+    <link href="https://cdn.bootcss.com/prettify/r298/prettify.min.css" rel="stylesheet">
     <script src="{{url('/js')}}/preview.js"></script>
     <div class="container">
         <div class="page-header">
