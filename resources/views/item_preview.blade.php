@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    {{--<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>--}}
     <script src="{{url('/js')}}/preview.js"></script>
     <div class="container">
         <div class="alert alert-success" role="alert">{{$message}}</div>
