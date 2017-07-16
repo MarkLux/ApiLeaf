@@ -36,9 +36,7 @@
 
 @include("layouts.top_nav")
 
-<div  style="height:60px">
-</div>
-<br>
+{{--<div  style="height:60px"></div>--}}
 @yield('content')
 <!--footer-->
 </body>
