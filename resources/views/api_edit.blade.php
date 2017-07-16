@@ -119,7 +119,7 @@
             <input id="response-headers-input" name="response_headers" type="hidden" value="{{$responseHeaders}}">
             <input id="response-body-input" name="response_body" type="hidden" value="{{$responseBody}}">
             <input id="response-example-input" name="response_example" type="hidden" value="{{$responseExample}}">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="checkBeforeSubmit()"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>&nbsp生成文档!</button>
+            <button type="submit" class="btn btn-primary btn-lg" onclick="return checkBeforeSubmit()"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>&nbsp生成文档!</button>
         </form>
 
     </div>

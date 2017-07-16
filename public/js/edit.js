@@ -29,7 +29,7 @@ function checkBeforeSubmit() {
     // 检查基本信息
 
     baseInfoKeys = [
-        'api-name','api-url','api-method','api-description'
+        'api-name','api-url','api-method'
     ];
 
     for (i=0;i<baseInfoKeys.length;i++) {
