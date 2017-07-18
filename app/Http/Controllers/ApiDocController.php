@@ -294,7 +294,7 @@ class ApiDocController extends Controller
         $formatted = [];
 
         // 对象数组默认所有数组中的对象全部同构，只保留第一个
-        while (!Utils::is_assoc($body) && !empty($body)) {
+        while (!Utils::is_assoc($body) && is_array($body) && !empty($body)) {
             $body = $body[0];
         }
 
