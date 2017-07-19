@@ -13,12 +13,18 @@
         <div class="row" style="max-width: 100%">
 
             <div class="col-md-2" >
-                <h4>导航</h4>
-                <div class="list-group">
-                    @foreach($apiInfos as $item)
-                    <a href="{{'#header-'.$item->id}}" class="list-group-item">{{$item->api_name}}</a>
-                    @endforeach
-                </div>
+                <h3>导航</h3>
+                @foreach($tags as $tag)
+                    <h4>{{$tag->api_tag === null?'未分类':$tag->api_tag}}</h4>
+                    <div class="list-group">
+                        @foreach($apiInfos as $item)
+                            @if($item->api_tag == $tag->api_tag)
+                            <a href="{{'#header-'.$item->id}}" class="list-group-item">{{$item->api_name}}</a>
+                            @endif
+                        @endforeach
+                    </div>
+                @endforeach
+
             </div>
             <div class="col-md-10">
 

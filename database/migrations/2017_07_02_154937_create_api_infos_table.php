@@ -21,6 +21,7 @@ class CreateApiInfosTable extends Migration
             $table->string('api_name');
             $table->string('api_method');
             $table->string('api_description')->nullable();
+            $table->string('api_tag')->nullable();
             $table->text('request_headers')->nullable();
             $table->text('request_body')->nullable();
             $table->text('request_params')->nullable();

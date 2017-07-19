@@ -152,8 +152,14 @@ class ApiDocController extends Controller
             return view('errors.404');
         }
 
+        // 组织生成目录
+        $tags = DB::table('api_infos')->where('collection_id',$collectionId)->select(DB::raw('distinct api_tag'))->get();
+
+//        dd(array_values($tags->toArray()));
+
         $apiInfos = DB::table('api_infos')
             ->where('collection_id',$collectionId)
+            ->orderBy('api_tag','asc')
             ->get();
 
         foreach ($apiInfos as $api) {
@@ -168,6 +174,7 @@ class ApiDocController extends Controller
         return view('apidoc',[
             'collectionInfo' => $collectionInfo,
             'apiInfos' => $apiInfos,
+            'tags' => array_values($tags->toArray()),
             'editMenuOn' => $helper->canUserAccess($collectionId)
         ]);
     }

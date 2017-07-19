@@ -17,6 +17,7 @@ class CreateApiCollectionsTable extends Migration
             $table->increments('id');
             $table->string('title',100);
             $table->string('description')->nullable();
+            $table->text('dict')->nullable();
             $table->integer('owner_id');
             $table->timestamps();
         });
