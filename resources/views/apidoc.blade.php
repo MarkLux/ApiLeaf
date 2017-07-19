@@ -33,11 +33,10 @@
                 @foreach($apiInfos as $item)
                 <div class="container" style="max-width: 100%">
                     <blockquote>
-                        <button class="btn btn-default"><a href="#">回顶部</a></button>
                         <h3 id="{{'header-'.$item->id}}"><span style="font-size: 24px">{{$item->api_name}}</span></h3>
                         <p>{{$item->api_description}}</p>
-
                     </blockquote>
+                    <button class="btn btn-default"><a href="#">回顶部</a></button>
                     <p style="font-size: 16px"><span class="label label-info">{{$item->api_method}}</span>&nbsp {{$item->api_url}}</p>
                     @if($editMenuOn)
                         <div class="btn-group" role="group" aria-label="..." style="margin-bottom: 15px">
