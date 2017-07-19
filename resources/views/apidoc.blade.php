@@ -33,6 +33,7 @@
                 @foreach($apiInfos as $item)
                 <div class="container" style="max-width: 100%">
                     <blockquote>
+                        <button class="btn btn-default"><a href="#">回顶部</a></button>
                         <h3 id="{{'header-'.$item->id}}"><span style="font-size: 24px">{{$item->api_name}}</span></h3>
                         <p>{{$item->api_description}}</p>
 
