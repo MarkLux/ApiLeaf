@@ -18,9 +18,9 @@ function getRequestInputs() {
 }
 
 function refreshShowers(json) {
-    refreshStatusPanel(json.response.status_code);
-    ace.edit("headers-shower").setValue(JSON.stringify(json.response.headers,null,"\t"));
-    ace.edit("body-shower").setValue(JSON.stringify(json.response.body,null,"\t"));
+    // refreshStatusPanel(json.response.status_code);
+    // ace.edit("headers-shower").setValue(JSON.stringify(json.response.headers,null,"\t"));
+    ace.edit("body-shower").setValue(JSON.stringify(json,null,"\t"));
 }
 
 function refreshStatusPanel(statusCode) {
@@ -54,20 +54,24 @@ function sendTestRequest() {
     var inputs =  getRequestInputs();
 
     console.log(inputs);
-
-    fetch("/api/test",{
-        method:'POST',
-            body:JSON.stringify(inputs),
-            headers:{
-            'content-type':'application/json'
-        }
+    if (inputs.method === "GET") {
+        inputs.body = undefined;
+    }
+    fetch(inputs.url,{
+        method:inputs.method,
+        body:inputs.body,
+        headers:JSON.parse(inputs.headers)
     }).then(function (res) {
+        var headerObj ={};
+        res.headers.forEach(function (value, key, arr) {
+            headerObj[key] = value;
+        });
+        refreshStatusPanel(res.status);
+        ace.edit("headers-shower").setValue(JSON.stringify(headerObj,null,"\t"));
         return res.json();
     }).then(function (json) {
         // 设置将结果返回输出到编辑器中去
         console.log(json);
-        console.log(json.response);
-
         refreshShowers(json);
     });
 }
