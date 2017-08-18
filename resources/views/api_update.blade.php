@@ -43,7 +43,12 @@
                     <br>
                     <div class="input-group" id="API-DESCRIPTION">
                         <span class="input-group-addon" id="basic-addon1">DESCRIPTION</span>
-                        <input type="text" id="api-description" class="form-control" placeholder="the description" name="api_description" aria-describedby="basic-addon1">
+                        <input type="text" id="api-description" class="form-control" placeholder="the description" name="api_description" aria-describedby="basic-addon1" value="{{$apiDescription}}">
+                    </div>
+                    <br>
+                    <div class="input-group" id="API-TAG">
+                        <span class="input-group-addon" id="basic-addon1">GROUP</span>
+                        <input type="text" id="api-tag" class="form-control" placeholder="the group" name="api_tag" aria-describedby="basic-addon1" value="{{$apiTag}}">
                     </div>
                 </div>
             </div>

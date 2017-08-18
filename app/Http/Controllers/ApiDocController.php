@@ -68,7 +68,7 @@ class ApiDocController extends Controller
                     $key = explode('=', $param)[0];
                     $params[] = [
                         'param_key' => $key,
-                        'param_type' => '',
+                        'param_type' => $this->getValueType($key),
                         'param_description' => ''
                     ];
                 }
@@ -85,6 +85,7 @@ class ApiDocController extends Controller
             'responseBody' => json_encode($responseBody),
             'requestExample' => $request->input('request_body', null),
             'responseExample' => $request->input('response_body', null),
+            'apiTag' => '',
         ];
 
         return view('api_edit', $data);
@@ -107,7 +108,8 @@ class ApiDocController extends Controller
             'api_response_body' => 'json',
             'api_response_example' => 'json',
             'api_request_example' => 'json',
-            'collection_id' => 'required|integer'
+            'collection_id' => 'required|integer',
+            'api_tag' => 'string'
         ]);
 
         if (!$helper->canUserAccess($request['collection_id'])) {
@@ -127,6 +129,7 @@ class ApiDocController extends Controller
             'apiUrl' => $api->api_url,
             'apiDescription' => $api->api_description,
             'apiMethod' => $api->api_method,
+            'apiTag' => $api->api_tag,
             'requestHeaders' => json_decode($api->request_headers, true),
             'requestBody' => json_decode($api->request_body, true),
             'requestParams' => json_decode($api->request_params, true),
@@ -204,7 +207,8 @@ class ApiDocController extends Controller
             'responseHeaders' => $api->response_headers,
             'responseBody' => $api->response_body,
             'responseExample' => $api->response_example,
-            'collectionId' => $api->collection_id
+            'collectionId' => $api->collection_id,
+            'apiTag' => $api->api_tag,
         ];
 
         return view('api_update',$data);
@@ -249,6 +253,7 @@ class ApiDocController extends Controller
             'apiUrl' => $api->api_url,
             'apiDescription' => $api->api_description,
             'apiMethod' => $api->api_method,
+            'apiTag' => $api->api_tag,
             'requestHeaders' => json_decode($api->request_headers, true),
             'requestBody' => json_decode($api->request_body, true),
             'requestParams' => json_decode($api->request_params, true),

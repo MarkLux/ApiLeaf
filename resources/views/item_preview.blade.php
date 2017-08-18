@@ -9,7 +9,11 @@
     </div>
     <div class="container">
         <blockquote>
-            <span style="font-size: 24px">{{$apiName}}</span>
+            @if(isset($apiTag))
+                <span style="font-size: 24px">[{{$apiTag}}] {{$apiName}}</span>
+            @else
+                <span style="font-size: 24px">[未分类] {{$apiName}}</span>
+            @endif
             <p>{{$apiDescription}}</p>
         </blockquote>
             <p style="font-size: 16px"><span class="label label-info">{{$apiMethod}}</span>&nbsp {{$apiUrl}}</p>
