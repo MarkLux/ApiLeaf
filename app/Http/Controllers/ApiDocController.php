@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Common\Utils;
 use App\ViewComposer\CollectionHelper;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ApiDocController extends Controller
 {
@@ -95,7 +97,7 @@ class ApiDocController extends Controller
      * 将数据保存到数据库
      */
 
-    public function generate(Request $request,CollectionHelper $helper)
+    public function generate(Request $request, CollectionHelper $helper)
     {
         $this->validate($request, [
             'api_url' => 'required',
@@ -118,6 +120,7 @@ class ApiDocController extends Controller
 
         $apiInfo = $request->all();
         $apiInfo['user_id'] = $request->user()->id;
+        $apiInfo['created_at'] = $request['updated_at'] = Carbon::now();
 
         $apiId = DB::table('api_infos')->insertGetId($apiInfo);
 
@@ -145,10 +148,20 @@ class ApiDocController extends Controller
 
     }
 
-    public function renderDoc(Request $request,int $collectionId,CollectionHelper $helper)
+    public function renderDoc(Request $request, int $collectionId, CollectionHelper $helper)
     {
+        $validator = Validator::make($request->all(), [
+            'order_by' => 'string',
+            'order' => 'string',
+            'tag' => 'string'
+        ]);
+
+        if ($validator->fails()) {
+            return view('errors.503');
+        }
+
         $collectionInfo = DB::table('api_collections')
-            ->where('id',$collectionId)
+            ->where('id', $collectionId)
             ->first();
 
         if ($collectionInfo == null) {
@@ -156,35 +169,49 @@ class ApiDocController extends Controller
         }
 
         // 组织生成目录
-        $tags = DB::table('api_infos')->where('collection_id',$collectionId)->select(DB::raw('distinct api_tag'))->get();
+        $tags = DB::table('api_infos')->where('collection_id', $collectionId)->select(DB::raw('distinct api_tag'))->get();
 
 //        dd(array_values($tags->toArray()));
 
-        $apiInfos = DB::table('api_infos')
-            ->where('collection_id',$collectionId)
-            ->orderBy('api_tag','asc')
-            ->get();
+        $builder = DB::table('api_infos')
+            ->where('collection_id', $collectionId);
+
+        if (isset($request->tag)) {
+            if ($request->tag == 'null') {
+                $builder = $builder->where('api_tag', null);
+            } else {
+                $builder = $builder->where('api_tag', $request->tag);
+            }
+        }
+
+        $orderBy = $request->input('order_by', 'api_tag');
+        $order = $request->input('order', 'asc');
+
+        $builder->orderBy($orderBy, $order);
+
+        $apiInfos = $builder->get();
 
         foreach ($apiInfos as $api) {
-            $api->request_params = json_decode($api->request_params,true);
-            $api->request_headers = json_decode($api->request_headers,true);
-            $api->request_body = json_decode($api->request_body,true);
-            $api->response_headers = json_decode($api->response_headers,true);
-            $api->response_body = json_decode($api->response_body,true);
+            $api->request_params = json_decode($api->request_params, true);
+            $api->request_headers = json_decode($api->request_headers, true);
+            $api->request_body = json_decode($api->request_body, true);
+            $api->response_headers = json_decode($api->response_headers, true);
+            $api->response_body = json_decode($api->response_body, true);
 
         }
 
-        return view('apidoc',[
+        return view('apidoc', [
             'collectionInfo' => $collectionInfo,
             'apiInfos' => $apiInfos,
             'tags' => array_values($tags->toArray()),
-            'editMenuOn' => $helper->canUserAccess($collectionId)
+            'editMenuOn' => $helper->canUserAccess($collectionId),
+            'nav' => true,
         ]);
     }
 
-    public function getUpdate(Request $request,CollectionHelper $helper,int $id)
+    public function getUpdate(Request $request, CollectionHelper $helper, int $id)
     {
-        $api = DB::table('api_infos')->where('id',$id)->first();
+        $api = DB::table('api_infos')->where('id', $id)->first();
 
         if ($api == null) {
             return view('errors.404');
@@ -211,10 +238,10 @@ class ApiDocController extends Controller
             'apiTag' => $api->api_tag,
         ];
 
-        return view('api_update',$data);
+        return view('api_update', $data);
     }
 
-    public function postUpdate(Request $request,CollectionHelper $helper,int $id)
+    public function postUpdate(Request $request, CollectionHelper $helper, int $id)
     {
         $this->validate($request, [
             'api_url' => 'required',
@@ -230,7 +257,7 @@ class ApiDocController extends Controller
             'collection_id' => 'required|integer'
         ]);
 
-        $api = DB::table('api_infos')->where('id',$id)->get(['collection_id','id'])->first();
+        $api = DB::table('api_infos')->where('id', $id)->get(['collection_id', 'id'])->first();
 
         if ($api == null) {
             return view('errors.404');
@@ -242,8 +269,9 @@ class ApiDocController extends Controller
 
         $apiInfo = $request->all();
         $apiInfo['user_id'] = $request->user()->id;
+        $apiInfo['updated_at'] = Carbon::now();
 
-         DB::table('api_infos')->where('id',$id)->update($apiInfo);
+        DB::table('api_infos')->where('id', $id)->update($apiInfo);
 
         $api = DB::table('api_infos')->where('id', $id)->get(['*'])->first();
 
@@ -269,9 +297,9 @@ class ApiDocController extends Controller
 
     }
 
-    public function delete(CollectionHelper $helper,int $id)
+    public function delete(CollectionHelper $helper, int $id)
     {
-        $api = DB::table('api_infos')->where('id',$id)->get(['collection_id','id'])->first();
+        $api = DB::table('api_infos')->where('id', $id)->get(['collection_id', 'id'])->first();
 
         if ($api == null) {
             return view('errors.404');
@@ -281,9 +309,9 @@ class ApiDocController extends Controller
             return view('errors.503');
         }
 
-        DB::table('api_infos')->where('id',$id)->delete();
+        DB::table('api_infos')->where('id', $id)->delete();
 
-        return redirect('/api/doc/'.$api->collection_id);
+        return redirect('/api/doc/' . $api->collection_id);
 
     }
 
@@ -336,7 +364,8 @@ class ApiDocController extends Controller
         return $formatted;
     }
 
-    private function getValueType($value){
+    private function getValueType($value)
+    {
         $type = gettype($value);
         if ($type == 'array') {
             if (Utils::is_assoc($value)) {

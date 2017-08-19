@@ -11,7 +11,24 @@
             </button>
             <a class="navbar-brand" href="{{url("/")}}"><span class="glyphicon glyphicon-leaf" aria-hidden="true">一叶·ApiLeaf</span></a>
         </div>
-
+        @if(isset($nav))
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">导航 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        @foreach($tags as $tag)
+                        <li><a><h5>{{$tag->api_tag === null?'未分类':$tag->api_tag}}</h5></a></li>
+                        @foreach($apiInfos as $item)
+                        @if($item->api_tag == $tag->api_tag)
+                        <li><a href="{{'#header-'.$item->id}}">{{$item->api_name}}</a></li>
+                        @endif
+                        @endforeach
+                            <li role="separator" class="divider"></li>
+                        @endforeach
+                    </ul>
+                </li>
+            </ul>
+        @endif
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
             <ul class="nav navbar-nav navbar-right">

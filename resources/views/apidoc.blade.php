@@ -3,37 +3,73 @@
     {{--<script src="https://cdn.bootcss.com/prettify/r298/run_prettify.min.js"></script>--}}
     {{--<link href="https://cdn.bootcss.com/prettify/r298/prettify.min.css" rel="stylesheet">--}}
     <script src="{{url('/js')}}/preview.js"></script>
-    <div class="container" style="margin-top: -20px">
+    <div class="container">
+    {{--<div class="col-md-2" >--}}
+        {{--<h3>导航</h3>--}}
+        {{--@foreach($tags as $tag)--}}
+            {{--<h4>{{$tag->api_tag === null?'未分类':$tag->api_tag}}</h4>--}}
+            {{--<div class="list-group">--}}
+                {{--@foreach($apiInfos as $item)--}}
+                    {{--@if($item->api_tag == $tag->api_tag)--}}
+                        {{--<a href="{{'#header-'.$item->id}}" class="list-group-item">{{$item->api_name}}</a>--}}
+                    {{--@endif--}}
+                {{--@endforeach--}}
+            {{--</div>--}}
+        {{--@endforeach--}}
+
+    {{--</div>--}}
+    <div class="col-md-12">
         <div class="container">
             <div class="page-header">
                 <h1>{{$collectionInfo->title}}</h1>
                 <small>{{$collectionInfo->description}}</small>
             </div>
         </div>
+        <div class="container">
+            <div class="btn-group">
+                <button type="button"class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span id="tag_select">组别</span> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    @foreach($tags as $tag)
+                        <li><a onclick="switchValue('tag_select','{{$tag->api_tag === null?'未分类':$tag->api_tag}}')">{{$tag->api_tag === null?'未分类':$tag->api_tag}}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span id="order_by_select">排序依据</span><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a onclick="switchValue('order_by_select','创建时间')">创建时间</a></li>
+                    <li><a onclick="switchValue('order_by_select','更新时间')">更新时间</a></li>
+                    <li><a onclick="switchValue('order_by_select','拼音顺序')">拼音顺序</a></li>
+                    <li><a onclick="switchValue('order_by_select','默认')">默认</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button"  class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span id="order_select">顺序</span> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a onclick="switchValue('order_select','升序')">升序</a></li>
+                    <li><a onclick="switchValue('order_select','降序')">降序</a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-default" onclick="jump()">筛选</button>
+        </div>
+        <br>
         <div class="row" style="max-width: 100%">
 
-            <div class="col-md-2" >
-                <h3>导航</h3>
-                @foreach($tags as $tag)
-                    <h4>{{$tag->api_tag === null?'未分类':$tag->api_tag}}</h4>
-                    <div class="list-group">
-                        @foreach($apiInfos as $item)
-                            @if($item->api_tag == $tag->api_tag)
-                            <a href="{{'#header-'.$item->id}}" class="list-group-item">{{$item->api_name}}</a>
-                            @endif
-                        @endforeach
-                    </div>
-                @endforeach
 
-            </div>
-            <div class="col-md-10">
+            <div class="container">
 
 
 
                 @foreach($apiInfos as $item)
                 <div class="container" style="max-width: 100%">
                     <blockquote>
-                        <h3 id="{{'header-'.$item->id}}"><span style="font-size: 24px">{{$item->api_name}}</span></h3>
+                        <h3 id="{{'header-'.$item->id}}"><span style="font-size: 24px">[{{$item->api_tag}}] {{$item->api_name}}</span></h3>
                         <p>{{$item->api_description}}</p>
                     </blockquote>
                     <button class="btn btn-default"><a href="#">回顶部</a></button>
@@ -169,4 +205,5 @@
                 return false;
         }
     </script>
+    </div>
 @endsection
