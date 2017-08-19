@@ -3,22 +3,44 @@
     {{--<script src="https://cdn.bootcss.com/prettify/r298/run_prettify.min.js"></script>--}}
     {{--<link href="https://cdn.bootcss.com/prettify/r298/prettify.min.css" rel="stylesheet">--}}
     <script src="{{url('/js')}}/preview.js"></script>
-    <div class="container">
-    {{--<div class="col-md-2" >--}}
-        {{--<h3>导航</h3>--}}
-        {{--@foreach($tags as $tag)--}}
-            {{--<h4>{{$tag->api_tag === null?'未分类':$tag->api_tag}}</h4>--}}
-            {{--<div class="list-group">--}}
-                {{--@foreach($apiInfos as $item)--}}
-                    {{--@if($item->api_tag == $tag->api_tag)--}}
-                        {{--<a href="{{'#header-'.$item->id}}" class="list-group-item">{{$item->api_name}}</a>--}}
-                    {{--@endif--}}
-                {{--@endforeach--}}
-            {{--</div>--}}
-        {{--@endforeach--}}
+    <style>
+        .layout {
+            display: flex;
 
-    {{--</div>--}}
-    <div class="col-md-12">
+        }
+        .left {
+            max-height: 100vh;
+            flex: 0 0 200px;
+            width: 30%;
+            overflow: scroll;
+            margin-left: 40px;
+            padding-right: 20px;
+        }
+        .right {
+            flex: auto;
+            max-height: 100vh;
+            overflow: scroll;
+            padding-right: 20px;
+        }
+    </style>
+    <div class="cont">
+        <div class="layout">
+    {{--<div class="col-md-2" >--}}
+            <div class="left">
+        <h3>导航</h3>
+        @foreach($tags as $tag)
+            <h4>{{$tag->api_tag === null?'未分类':$tag->api_tag}}</h4>
+            <div class="list-group">
+                @foreach($apiInfos as $item)
+                    @if($item->api_tag == $tag->api_tag)
+                        <a href="{{'#header-'.$item->id}}" class="list-group-item">{{$item->api_name}}</a>
+                    @endif
+                @endforeach
+            </div>
+        @endforeach
+
+    </div>
+    <div class="right">
         <div class="container">
             <div class="page-header">
                 <h1>{{$collectionInfo->title}}</h1>
@@ -205,5 +227,6 @@
                 return false;
         }
     </script>
+        </div>
     </div>
 @endsection
