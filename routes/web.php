@@ -47,6 +47,9 @@ Route::get('/share/{id}','ApiShareController@getManageView');
 Route::post('/share/{id}/member/add','ApiShareController@addMember');
 Route::get('/share/{id}/member/delete','ApiShareController@deleteMember');
 
+Route::get('/api/doc/{id}/favor','ApiFavorController@favor');
+Route::get('/api/doc/{id}/unfavor','ApiFavorController@unfavor');
+
 Route::get('/about',function () {
     return view('about');
 });

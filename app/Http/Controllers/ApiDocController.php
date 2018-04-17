@@ -6,6 +6,7 @@ use App\Common\Utils;
 use App\ViewComposer\CollectionHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -166,6 +167,17 @@ class ApiDocController extends Controller
 
         if ($collectionInfo == null) {
             return view('errors.404');
+        }
+
+        if (Auth::check()) {
+            // 检查是否已经收藏
+            $favor = DB::table('api_favors')->where([
+                'collection_id' => $collectionId,
+                'user_id' => Auth::user()->id
+            ])->first();
+            if ($favor != null) {
+                $collectionInfo->isFavor = true;
+            }
         }
 
         // 组织生成目录

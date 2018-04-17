@@ -43,7 +43,14 @@
     <div class="right">
         <div class="container">
             <div class="page-header">
-                <h1>{{$collectionInfo->title}}</h1>
+                <h1>
+                    {{$collectionInfo->title}}
+                    @if(!isset($collectionInfo->isFavor))
+                        <a href="{{url('/api/doc/'.$collectionInfo->id.'/favor')}}"><button class="btn btn-warning"><span class="glyphicon glyphicon-star-empty"></span>收藏</button></a>
+                    @else
+                        <a href="{{url('/api/doc/'.$collectionInfo->id.'/unfavor')}}"><button class="btn btn-warning"><span class="glyphicon glyphicon-star"></span>已收藏</button></a>
+                    @endif
+                </h1>
                 <small>{{$collectionInfo->description}}</small>
             </div>
         </div>

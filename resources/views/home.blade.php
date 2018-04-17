@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="panel panel-default">
+            <div class="panel panel-success">
                 <div class="panel-heading">我创建的项目</div>
 
                 <div class="panel-body">
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">我参与的项目</div>
 
                 <div class="panel-body">
@@ -56,6 +56,33 @@
                                     <div class="btn-group" role="group" aria-label="...">
                                         <button type="button" class="btn btn-default" ><a href="{{url('/api/doc/'.$collection->id)}}" style="color: black">查看</a></button>
                                         <button type="button" class="btn btn-default"><a href="{{url('/collection/update/'.$collection->id)}}" style="color: black">编辑</a></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel panel-warning">
+                <div class="panel-heading">我收藏的项目</div>
+
+                <div class="panel-body">
+                    <table class="table table-striped task-table">
+                        <thead>
+                        <tr><th>名称</th><th style="text-align: center"><span>操作</span></th></tr>
+                        </thead>
+                        <tbody>
+                        @foreach($favoredCollections as $collection)
+                            <tr>
+                                <td class="table-text"><h4>{{$collection->title}}</h4></td>
+                                <td style="text-align: center;">
+                                    {{--<a href="{{url('/api/doc/'.$collection->id)}}"><button class="btn btn-primary">查看文档</button></a>--}}
+                                    {{--<button class="btn btn-primary">管理成员</button>--}}
+                                    {{--<a href="{{url('/collection/update')}}"><button class="btn btn-primary">修改项目信息</button></a>--}}
+                                    <div class="btn-group" role="group" aria-label="...">
+                                        <button type="button" class="btn btn-default" ><a href="{{url('/api/doc/'.$collection->id)}}" style="color: black">查看</a></button>
                                     </div>
                                 </td>
                             </tr>
