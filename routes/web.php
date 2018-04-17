@@ -43,6 +43,10 @@ Route::get('/collection/update/{id}','ApiCollectionController@getUpdate');
 Route::post('/collection/update/{id}','ApiCollectionController@postUpdate');
 Route::get('/collection/delete/{id}','ApiCollectionController@delete');
 
+Route::get('/share/{id}','ApiShareController@getManageView');
+Route::post('/share/{id}/member/add','ApiShareController@addMember');
+Route::get('/share/{id}/member/delete','ApiShareController@deleteMember');
+
 Route::get('/about',function () {
     return view('about');
 });

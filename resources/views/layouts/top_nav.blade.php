@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{url("/")}}"><span class="glyphicon glyphicon-leaf" aria-hidden="true">一叶·ApiLeaf</span></a>
+            <a class="navbar-brand" href="{{url("/")}}">ApiLeaf&nbsp<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span></a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

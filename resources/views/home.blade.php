@@ -25,7 +25,7 @@
                                 <div class="btn-group" role="group" aria-label="...">
                                     <button type="button" class="btn btn-default" ><a href="{{url('/api/doc/'.$collection->id)}}" style="color: black">查看</a></button>
                                     <button type="button" class="btn btn-default"><a href="{{url('/collection/update/'.$collection->id)}}" style="color: black">编辑</a></button>
-                                    <button type="button" class="btn btn-default">管理成员</button>
+                                    <button type="button" class="btn btn-default"><a href="{{url('/share/'.$collection->id)}}" style="color: black">管理成员</a></button>
                                     <button type="button" class="btn btn-danger"><a href="{{url('/collection/delete/'.$collection->id)}}" onclick="return confirmDel()" style="color: white">删除</a></button>
                                 </div>
                             </td>
