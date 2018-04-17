@@ -77,10 +77,10 @@
                 <div class="top-right links">
                     <a href="{{url('/about')}}">关于</a>
                     @if (Auth::check())
-                        <a href="{{ url('/home') }}">主面板</a>
+                        <a href="{{ url('/home') }}" >主面板</a>
                     @else
-                        <a href="{{ url('/login') }}">登录</a>
-                        <a href="{{ url('/register') }}">注册</a>
+                        <a href="{{ url('/login') }}" >登录</a>
+                        <a href="{{ url('/register') }}" >注册</a>
                     @endif
                 </div>
             @endif
@@ -89,7 +89,7 @@
                 <div class="title m-b-md">
                     {{--<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Api Leaf--}}
                      Api Leaf
-                    <span id="logo">
+                    <span id="logo" onclick="onEggClick()">
                         <svg width="79px" height="75px" viewBox="0 0 79 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
@@ -113,5 +113,52 @@
                 </div>
             </div>
         </div>
+        <script>
+            var egg = 0;
+            function onEggClick() {
+                egg++;
+                switch (egg%7) {
+                    case 0:
+                        changeTheme('#ffffff','#646B6E');
+                        console.log("flies away.");
+                        break;
+                    case 1:
+                        changeTheme('#4285f4','#ffffff');
+                        console.log("The mighty desert");
+                        break;
+                    case 2:
+                        changeTheme('#34a853','#ffffff');
+                        console.log("is burning for the love");
+                        break;
+                    case 3:
+                        changeTheme('#ff9900', '#ffffff');
+                        console.log("of a bladeof grass");
+                        break;
+                    case 4:
+                        changeTheme('#ff0033', '#ffffff');
+                        console.log("who shakes her head");
+                        break;
+                    case 5:
+                        changeTheme('#2FE1D6', '#ffffff');
+                        console.log("and laughs");
+                        break;
+                    case 6:
+                        changeTheme('#FFCD00', '#ffffff');
+                        console.log("and");
+                        break;
+                }
+            }
+
+            function changeTheme(bgColor,fontColor) {
+                var body = document.getElementsByTagName("body")[0];
+                body.style.backgroundColor = bgColor;
+                body.style.color = fontColor;
+                var links = document.getElementsByTagName('a');
+                for (var i = 0;i<links.length;i++) {
+                    links[i].style.color = fontColor;
+                }
+                document.getElementById('Artboard').style.stroke = fontColor;
+            }
+        </script>
     </body>
 </html>
