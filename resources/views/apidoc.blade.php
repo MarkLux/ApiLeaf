@@ -22,6 +22,11 @@
             overflow: scroll;
             padding-right: 20px;
         }
+        @media screen and (max-width: 768px) {
+            .left{
+                display:none;
+            }
+        }
     </style>
     <div class="cont">
         <div class="layout">
