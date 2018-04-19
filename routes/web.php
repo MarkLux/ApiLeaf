@@ -50,6 +50,10 @@ Route::get('/share/{id}/member/delete','ApiShareController@deleteMember');
 Route::get('/api/doc/{id}/favor','ApiFavorController@favor');
 Route::get('/api/doc/{id}/unfavor','ApiFavorController@unfavor');
 
+Route::get('/api/codes/{id}','ApiCodesController@getView');
+Route::get('/api/codes/{id}/edit','ApiCodesController@getEditView');
+Route::post('/api/codes/{id}/update','ApiCodesController@updateCodes');
+
 Route::get('/about',function () {
     return view('about');
 });

@@ -218,6 +218,8 @@ class ApiDocController extends Controller
             'tags' => array_values($tags->toArray()),
             'editMenuOn' => $helper->canUserAccess($collectionId),
             'nav' => true,
+            'isDoc' => true,
+            'apiCollection' => $collectionInfo
         ]);
     }
 

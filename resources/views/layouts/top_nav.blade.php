@@ -10,6 +10,11 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{{url("/")}}">ApiLeaf&nbsp<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span></a>
+            @if(isset($isDoc))
+                <a class="navbar-brand" href="{{url("/api/doc/".$apiCollection->id)}}">文档</a>
+                <a class="navbar-brand" href="{{url("/api/codes/".$apiCollection->id)}}">状态码</a>
+                <a class="navbar-brand" href="#">数据字典</a>
+            @endif
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

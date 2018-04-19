@@ -24,7 +24,16 @@
                                 {{--<a href="{{url('/collection/update')}}"><button class="btn btn-primary">修改项目信息</button></a>--}}
                                 <div class="btn-group" role="group" aria-label="...">
                                     <button type="button" class="btn btn-default" ><a href="{{url('/api/doc/'.$collection->id)}}" style="color: black">查看</a></button>
-                                    <button type="button" class="btn btn-default"><a href="{{url('/collection/update/'.$collection->id)}}" style="color: black">编辑</a></button>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            编辑 <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{url('/collection/update/'.$collection->id)}}">说明</a></li>
+                                            <li><a href="{{url('/api/codes/'.$collection->id).'/edit'}}">状态码</a></li>
+                                            <li><a href="#">数据字典</a></li>
+                                        </ul>
+                                    </div>
                                     <button type="button" class="btn btn-default"><a href="{{url('/share/'.$collection->id)}}" style="color: black">管理成员</a></button>
                                     <button type="button" class="btn btn-danger"><a href="{{url('/collection/delete/'.$collection->id)}}" onclick="return confirmDel()" style="color: white">删除</a></button>
                                 </div>
