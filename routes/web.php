@@ -54,6 +54,11 @@ Route::get('/api/codes/{id}','ApiCodesController@getView');
 Route::get('/api/codes/{id}/edit','ApiCodesController@getEditView');
 Route::post('/api/codes/{id}/update','ApiCodesController@updateCodes');
 
+Route::get('/api/data-dict/{id}/edit','DataDictController@getEditView');
+Route::post('/api/data-dict/{dictId}/update','DataDictController@postUpdate');
+Route::get('/api/data-dict/{collectionId}/create','DataDictController@getCreateView');
+Route::post('/api/data-dict/{collectionId}/create','DataDictController@postCreate');
+
 Route::get('/about',function () {
     return view('about');
 });
