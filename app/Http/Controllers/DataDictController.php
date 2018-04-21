@@ -134,8 +134,6 @@ class DataDictController extends Controller
         $dataDict->body = json_encode($items);
 
         $dataDict->save();
-
-        dd($dataDict);
     }
 
     public function postUpdate(Request $request, int $dictId)
