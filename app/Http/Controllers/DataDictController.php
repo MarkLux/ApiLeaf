@@ -134,6 +134,8 @@ class DataDictController extends Controller
         $dataDict->body = json_encode($items);
 
         $dataDict->save();
+
+        return redirect('/api/'.$collectionId.'/data-dict');
     }
 
     public function postUpdate(Request $request, int $dictId)
@@ -172,7 +174,7 @@ class DataDictController extends Controller
 
         $dataDict->save();
 
-        return redirect('/');
+        return redirect('/api/'.$dataDict->collection_id.'/data-dict');
     }
 
     public function deleteDict(int $dictId)
@@ -192,6 +194,6 @@ class DataDictController extends Controller
 
         $dataDict->delete();
 
-        return redirect('/');
+        return redirect('/api/'.$dataDict->collection_id.'/data-dict');
     }
 }
