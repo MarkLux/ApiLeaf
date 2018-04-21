@@ -11,13 +11,15 @@ namespace App\Http\Controllers;
 
 use App\ApiCollection;
 use App\DataDict;
+use App\ViewComposer\CollectionHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DataDictController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('getListView');
     }
 
     public function getEditView(int $dictId)
@@ -28,6 +30,13 @@ class DataDictController extends Controller
         }
 
         $apiCollection = ApiCollection::find($dict->collection_id);
+
+        $helper = new CollectionHelper();
+
+        // 权限检查
+        if (!$helper->canUserAccess($apiCollection->id)) {
+            return view("errors.503");
+        }
 
         return view("data_dict_edit",[
             'apiCollection' => $apiCollection,
@@ -42,11 +51,49 @@ class DataDictController extends Controller
     public function getCreateView(int $collectionId)
     {
         $apiCollection = ApiCollection::find($collectionId);
+
+        $helper = new CollectionHelper();
+
+        // 权限检查
+        if (!$helper->canUserAccess($apiCollection->id)) {
+            return view("errors.503");
+        }
+
         if ($apiCollection == null) {
             return view("errors.404");
         }
         return view("data_dict_edit",[
             'apiCollection' => $apiCollection
+        ]);
+    }
+
+    public function getListView(int $collectionId)
+    {
+        $apiCollection = ApiCollection::find($collectionId);
+
+        if ($apiCollection == null) {
+            return view("errors.404");
+        }
+
+        $helper = new CollectionHelper();
+
+        $dataDicts = DataDict::where(['collection_id' => $collectionId])->get()->toArray();
+
+        foreach ($dataDicts as &$dict) {
+            $dict['body'] = json_decode($dict['body']);
+        }
+
+        $access = Auth::check();
+
+        if ($access) {
+            $access = $helper->canUserAccess($collectionId);
+        }
+
+        return view("data_dict", [
+            'apiCollection' => $apiCollection,
+            'dataDict' => $dataDicts,
+            'isDoc' => true,
+            'access' => $access
         ]);
     }
 
@@ -61,6 +108,13 @@ class DataDictController extends Controller
         }
 
         $apiCollection = ApiCollection::find($collectionId);
+
+        $helper = new CollectionHelper();
+
+        // 权限检查
+        if (!$helper->canUserAccess($collectionId)) {
+            return view("errors.503");
+        }
 
         if ($apiCollection == null) {
             return view("errors.404");
@@ -100,6 +154,13 @@ class DataDictController extends Controller
             return view("errors.404");
         }
 
+        $helper = new CollectionHelper();
+
+        // 权限检查
+        if (!$helper->canUserAccess($dataDict->collection_id)) {
+            return view("errors.503");
+        }
+
         $items = $postData->items;
         $keyIndexes = [];
         foreach ($items as $item) {
@@ -112,6 +173,26 @@ class DataDictController extends Controller
         $dataDict->body = json_encode($items);
 
         $dataDict->save();
+
+        return redirect('/');
+    }
+
+    public function deleteDict(int $dictId)
+    {
+        $dataDict = DataDict::find($dictId);
+
+        if ($dictId == null) {
+            return view("errors.404");
+        }
+
+        $helper = new CollectionHelper();
+
+        // 权限检查
+        if (!$helper->canUserAccess($dataDict->collection_id)) {
+            return view("errors.503");
+        }
+
+        $dataDict->delete();
 
         return redirect('/');
     }

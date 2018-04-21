@@ -106,6 +106,8 @@ class ApiCollectionController extends Controller
             DB::table('api_collections')->where('id', $id)->delete();
             DB::table('api_infos')->where('collection_id', $id)->delete();
             DB::table('collection_shares')->where('collection_id', $id)->delete();
+            DB::table('data_dicts')->where('collection_id', $id)->delete();
+            DB::table('api_codes')->where('collection_id', $id)->delete();
         });
 
         return redirect('/home');

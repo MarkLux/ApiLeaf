@@ -19,6 +19,9 @@
                         <input id="data_dict_name" type="text" class="form-control" value="{{isset($dictName)?$dictName:''}}"/>
                     </div>
                     <div class="col-md-8">
+                        @if(isset($update))
+                            <a href="{{url('/api/data-dict/'.$dictId.'/delete')}}" onclick="return confirmDelete()"><button style="float: right; margin-top: 10px;" class="btn btn-danger">删除此字典&nbsp<span class="glyphicon glyphicon-trash"></span></button></a>
+                        @endif
                         <button style="float: right; margin-top: 10px; margin-right: 20px;" class="btn btn-success" onclick="onDone()">Done&nbsp<span class="glyphicon glyphicon-ok"></span></button>
                     </div>
                 </div>
@@ -168,6 +171,12 @@
             var errDiv = document.getElementById("err-report");
             errDiv.innerHTML = msg;
             errDiv.style.display = 'block';
+        }
+        function confirmDelete() {
+            if (confirm("确定要删除此字典？")) {
+                return true;
+            }
+            return false;
         }
     </script>
 @endsection

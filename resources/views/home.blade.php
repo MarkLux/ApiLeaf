@@ -31,7 +31,6 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="{{url('/collection/update/'.$collection->id)}}">说明</a></li>
                                             <li><a href="{{url('/api/codes/'.$collection->id).'/edit'}}">状态码</a></li>
-                                            <li><a href="#">数据字典</a></li>
                                         </ul>
                                     </div>
                                     <button type="button" class="btn btn-default"><a href="{{url('/share/'.$collection->id)}}" style="color: black">管理成员</a></button>
