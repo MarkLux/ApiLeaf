@@ -75,7 +75,7 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    <a href="{{url('/about')}}">关于</a>
+                    <a href="{{url('/about')}}">使用指南</a>
                     @if (Auth::check())
                         <a href="{{ url('/home') }}" >主面板</a>
                     @else
@@ -88,7 +88,7 @@
             <div class="content">
                 <div class="title m-b-md">
                     {{--<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Api Leaf--}}
-                     Api Leaf
+                    Api Leaf
                     <span id="logo" onclick="onEggClick()">
                         <svg width="79px" height="75px" viewBox="0 0 79 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 

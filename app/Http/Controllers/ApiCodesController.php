@@ -11,7 +11,9 @@ namespace App\Http\Controllers;
 
 use App\ApiCode;
 use App\ApiCollection;
+use App\ViewComposer\CollectionHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ApiCodesController extends Controller
@@ -37,8 +39,14 @@ class ApiCodesController extends Controller
         $data = [
             'apiCodes' => $apiCodes,
             'apiCollection' => $apiCollection,
-            'isDoc' => true
+            'isDoc' => true,
+            'access' => false
         ];
+
+        if (Auth::check()) {
+            $helper = new CollectionHelper();
+            $data['access'] = $helper->canUserAccess($collectionId);
+        }
 
         return view("api_codes",$data);
     }

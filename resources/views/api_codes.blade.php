@@ -53,7 +53,14 @@
 
                     <div class="container">
                         <div class="panel panel-danger">
-                            <div class="panel-heading"><h4>状态码表</h4></div>
+                            <div class="panel-heading">
+                                <h4>
+                                    状态码表
+                                    @if($access)
+                                        <a href="{{url('/api/codes/'.$apiCollection->id.'/edit')}}"><button class="btn btn-default">编辑</button></a>
+                                    @endif
+                                </h4>
+                            </div>
                             <div class="panel-body">
                                 <table class="table">
                                     <tr><th>状态码</th><th>说明</th></tr>
