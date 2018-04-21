@@ -61,6 +61,8 @@ Route::get('/api/data-dict/{collectionId}/create','DataDictController@getCreateV
 Route::post('/api/data-dict/{collectionId}/create','DataDictController@postCreate');
 Route::get('/api/data-dict/{dictId}/delete','DataDictController@deleteDict');
 
+Route::post('/api/{collectionId}/data-dict/match','DataDictController@matchDict');
+
 Route::get('/about',function () {
     return view('about');
 });

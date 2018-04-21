@@ -19,7 +19,7 @@ class DataDictController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('getListView');
+        $this->middleware('auth')->except('getListView', 'matchDict');
     }
 
     public function getEditView(int $dictId)
@@ -38,7 +38,7 @@ class DataDictController extends Controller
             return view("errors.503");
         }
 
-        return view("data_dict_edit",[
+        return view("data_dict_edit", [
             'apiCollection' => $apiCollection,
             'dictName' => $dict->name,
             'dictDescription' => $dict->description,
@@ -62,7 +62,7 @@ class DataDictController extends Controller
         if ($apiCollection == null) {
             return view("errors.404");
         }
-        return view("data_dict_edit",[
+        return view("data_dict_edit", [
             'apiCollection' => $apiCollection
         ]);
     }
@@ -99,7 +99,7 @@ class DataDictController extends Controller
 
     public function postCreate(Request $request, int $collectionId)
     {
-        $postData = $request->input('data','');
+        $postData = $request->input('data', '');
 
         $postData = json_decode($postData);
 
@@ -135,12 +135,12 @@ class DataDictController extends Controller
 
         $dataDict->save();
 
-        return redirect('/api/'.$collectionId.'/data-dict');
+        return redirect('/api/' . $collectionId . '/data-dict');
     }
 
     public function postUpdate(Request $request, int $dictId)
     {
-        $postData = $request->input('data','');
+        $postData = $request->input('data', '');
 
         $postData = json_decode($postData);
 
@@ -174,7 +174,7 @@ class DataDictController extends Controller
 
         $dataDict->save();
 
-        return redirect('/api/'.$dataDict->collection_id.'/data-dict');
+        return redirect('/api/' . $dataDict->collection_id . '/data-dict');
     }
 
     public function deleteDict(int $dictId)
@@ -194,6 +194,73 @@ class DataDictController extends Controller
 
         $dataDict->delete();
 
-        return redirect('/api/'.$dataDict->collection_id.'/data-dict');
+        return redirect('/api/' . $dataDict->collection_id . '/data-dict');
+    }
+
+    public function matchDict(Request $request, int $collectionId)
+    {
+        $apiCollection = ApiCollection::find($collectionId);
+        if ($apiCollection == null) {
+            return response()->json([
+                'code' => 404
+            ]);
+        }
+
+        $dataDicts = DataDict::where(['collection_id' => $collectionId])
+            ->get(['id', 'key_index']);
+        if (count($dataDicts) == 0) {
+            return response()->json([
+                'code' => -1
+            ]);
+        }
+
+        // 输入的key列表
+        $inputKeys = json_decode($request->input('dict_keys', '[]'));
+        $maxJd = 0;
+        $targetDictId = -1;
+        foreach ($dataDicts as $dict) {
+            $jd = $this->clacJd($inputKeys, json_decode($dict->key_index));
+            if ($jd > $maxJd) {
+                $maxJd = $jd;
+                $targetDictId = $dict->id;
+            }
+        }
+        if ($maxJd <= 0 || $targetDictId == -1) {
+            return response()->json([
+                'code' => -1
+            ]);
+        }
+
+        $targetDict = DataDict::find($targetDictId)->toArray();
+        $targetDict['key_index'] = json_decode($targetDict['key_index']);
+        $targetDict['body'] = json_decode($targetDict['body']);
+
+        $matchedKeys = array_intersect($inputKeys, $targetDict['key_index']);
+        $matchedMap = [];
+        foreach ($matchedKeys as $key) {
+            $matchedMap[$key] = true;
+        }
+        return response()->json([
+            'code' => 0,
+            'jd' => $maxJd,
+            'dataDict' => $targetDict,
+            'matchedKeys' => $matchedMap
+        ]);
+
+    }
+
+    private function clacJd(array $a, array $b)
+    {
+        if (empty($a) || empty($b)) {
+            return 0;
+        }
+
+        $inner = array_intersect($a, $b);
+        $union = array_unique(array_merge($a, $b));
+
+        if (count($union) == 0) {
+            return 0;
+        }
+        return floatval(count($inner)) / count($union);
     }
 }
