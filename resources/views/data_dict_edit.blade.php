@@ -156,16 +156,16 @@
                     }
                 }
                 data.push(newDictItem);
-                var dataDict = {
-                    name: dictName,
-                    description: dictDescription,
-                    items: data
-                };
-                console.log(dataDict);
-                document.getElementById('dict-data').value = JSON.stringify(dataDict);
-                document.getElementById('data-dict-post-form').submit();
-                return true;
             }
+            var dataDict = {
+                name: dictName,
+                description: dictDescription,
+                items: data
+            };
+            console.log(dataDict);
+            document.getElementById('dict-data').value = JSON.stringify(dataDict);
+            document.getElementById('data-dict-post-form').submit();
+            return true;
         }
         function showError(msg) {
             var errDiv = document.getElementById("err-report");
