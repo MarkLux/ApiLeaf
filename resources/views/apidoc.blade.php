@@ -158,11 +158,26 @@
                                 <h4>&nbsp Body</h4>
                                 <table class="table table-striped">
                                     <thead>
-                                    <tr><th>名称</th><th>类型</th><th>说明</th></tr>
+                                    <tr><th>名称</th><th>类型</th><th style="text-align: center">说明</th></tr>
                                     </thead>
                                     <tbody>
                                     @foreach($item->request_body as $body)
-                                        <tr><td>{{$body['body_key']}}</td><td>{{$body['body_type']}}</td><td>{{$body['body_description']}}</td></tr>
+                                        <tr>
+                                            <td>{{$body['body_key']}}</td><td>{{$body['body_type']}}</td>
+                                            @if($body['body_description'] != '')
+                                                <td style="text-align: center">{{$body['body_description']}}</td>
+                                            @elseif(strpos($body['body_key'], '.'))
+                                                <td style="text-align: center">
+                                                    <a title="尝试在数据字典中匹配">
+                                                        <button type="button" class="btn btn-warning" onclick="onSearchClick('{{$collectionInfo->id}}','{{$item->id}}','{{$body['body_key']}}')">
+                                                            <span class="glyphicon glyphicon-search"></span>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            @else
+                                                <td style="text-align: center">开发者偷懒了，暂无说明→_→</td>
+                                            @endif
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>

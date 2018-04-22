@@ -52,7 +52,7 @@
     </h3>
     <hr>
     <p>
-        在API文档的请求/响应说明页面，如果有未标注描述的字段，可以通过点击<button class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-search"></span></button>按钮，在该项目的数据字典中尝试根据字段名查找改字段最可能对应的数据结构。
+        在API文档的请求/响应说明页面，如果有未标注描述的字段，可以通过点击<button class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-search"></span></button>按钮，在该项目的数据字典中尝试根据字段名查找该字段最可能对应的数据结构。
         <img src="http://of1deuret.bkt.clouddn.com/18-4-22/20551861.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
         ApiLeaf将会根据选中字段所在的数据结构，自动和项目数据字典中所有的结构尝试匹配，返回最可能的数据结构定义，同时返回匹配度、加粗所有命中的字段。
         <img src="http://of1deuret.bkt.clouddn.com/18-4-22/55531038.jpg" class="img-responsive" alt="Responsive image" style="max-width: 30vw">
