@@ -10,7 +10,7 @@
     <hr>
     <p>
         你可以在主面板 > 我创建的项目 里点击<b>新建项目</b>创建一个新的项目。
-        <img src="http://of1deuret.bkt.clouddn.com/18-4-22/85036240.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+        <img src="http://cdn.marklux.cn/18-4-22/85036240.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
         只需填写项目名和说明即可。
         <br>
     </p>
@@ -26,7 +26,7 @@
             <li>你参与构建的文档</li>
             <li>你收藏的文档</li>
         </ul>
-    <img src="http://of1deuret.bkt.clouddn.com/18-4-22/53945761.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+    <img src="http://cdn.marklux.cn/18-4-22/53945761.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
         对于创建的文档，你拥有删除、编辑、成员管理的权限。
     <br>
         对于参与的文档，你拥有编辑权限。

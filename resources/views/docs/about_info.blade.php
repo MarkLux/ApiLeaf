@@ -22,7 +22,7 @@
     </ul>
     <h4>&copy; 2017 - 2018</h4>
     <a onclick="showQRcode()">如果你愿意的话，可以点这里打赏作者..</a>
-    <img id="qr-code" src="http://of1deuret.bkt.clouddn.com/18-4-22/37365390.jpg" class="img-responsive" alt="Responsive image" style="max-width: 10vw; display: none">
+    <img id="qr-code" src="http://cdn.marklux.cn/18-4-22/37365390.jpg" class="img-responsive" alt="Responsive image" style="max-width: 10vw; display: none">
 </div>
 <script>
     function showQRcode() {

@@ -28,7 +28,7 @@
         <li>API的说明<code>DESCRIPTION</code>，可以不填写</li>
         </ul>
         如下图：
-    <img src="http://of1deuret.bkt.clouddn.com/18-4-22/6599911.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+    <img src="http://cdn.marklux.cn/18-4-22/6599911.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
     </p>
     <p>
         接下来需要填写API的请求和响应结构信息，分为以下几部分：
@@ -43,7 +43,7 @@
         </ul>
     各个部分（除示范外）每一个字段在文档中需要给出3个说明：字段名<code>key</code>、字段类型<code>type</code>和字段说明<code>description</code><br>
     每部分需要填写的内容都以<b>JSON</b>的形式编辑，测试完成后会自动生成字段名和字段类型，你只需要补充和修改对应的JSON即可，以响应体为例：
-    <img src="http://of1deuret.bkt.clouddn.com/18-4-22/6628827.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+    <img src="http://cdn.marklux.cn/18-4-22/6628827.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
     只需要检查每个字段的<code>body_type</code>是否正确，并根据需要补充<code>body_description</code>即可。
     </p>
     <br>
@@ -55,11 +55,11 @@
         你不必填写结构信息的所有部分，只需要补充完成需要给对接人员展示的部分即可。
         <br>
         可以在每个部分的面板头部勾选/取消勾选来选中/取消选中对应的部分。
-        <img src="http://of1deuret.bkt.clouddn.com/18-4-22/86505763.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+        <img src="http://cdn.marklux.cn/18-4-22/86505763.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
         最终生成的文档只会包含你所选中的部分。
         <br>
         补充好所有需要填写的内容后，点击最下方的<b>生成文档</b>按钮即可正式生成该API的文档，并进入预览界面。
-        <img src="http://of1deuret.bkt.clouddn.com/18-4-22/69614079.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+        <img src="http://cdn.marklux.cn/18-4-22/69614079.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
         该接口的文档将自动并入选中的项目文档中。
     </p>
     <br>

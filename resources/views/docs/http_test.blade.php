@@ -22,7 +22,7 @@
         在开始进行一个HTTP测试之前，你首先需要<a href="{{url('/register')}}"><b>注册</b></a>一个账号并<a href="{{url('/login')}}"><b>登录</b></a>。
         <br>
         登录后，在主页点击右上角的<b>主面板</b>进入你的用户空间，然后继续点击右上角的用户名下拉菜单，选择<b>发起测试</b>，之后便可进入测试界面。
-        <img src="http://of1deuret.bkt.clouddn.com/18-4-22/62289291.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+        <img src="http://cdn.marklux.cn/18-4-22/62289291.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
     </p>
     <br>
     <h3>
@@ -31,7 +31,7 @@
     <hr>
     <p>
         在测试面板的Request部分可以定制你的请求，如下图：
-        <img src="http://of1deuret.bkt.clouddn.com/18-4-22/4824403.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+        <img src="http://cdn.marklux.cn/18-4-22/4824403.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
         选择请求方式，填写<b>以http(s)://开头的完整URL地址</b>，<br>
         你可以在Headers和Body选项卡中以<b>JSON</b>的形式定制HTTP请求的headers和body。
         <br>
@@ -44,7 +44,7 @@
     <hr>
     <p>
         发送请求后，如果正常拿到响应，其Headers和Body将分别以<b>JSON</b>的形式填入下方的Response部分中，如下图所示：
-        <img src="http://of1deuret.bkt.clouddn.com/18-4-22/47318931.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
+        <img src="http://cdn.marklux.cn/18-4-22/47318931.jpg" class="img-responsive" alt="Responsive image" style="max-width: 50vw">
         面板的顶部会显示响应返回的<code>Status Code</code>。<br>
         如果请求发生异常，可以利用浏览器的开发者控制台追踪网络请求的流程以debug。<br>
         根据需要编辑响应的Headers和Body，接着便可以根据这次测试进行文档的生成。

@@ -49,6 +49,6 @@
     </h3>
     <p>
         使用Api Leaf的基本流程如下图所示：
-        <img src="http://of1deuret.bkt.clouddn.com/18-4-22/87341849.jpg" class="img-responsive" alt="Responsive image" style="max-width: 30vw">
+        <img src="http://cdn.marklux.cn/18-4-22/87341849.jpg" class="img-responsive" alt="Responsive image" style="max-width: 30vw">
     </p>
 </div>
